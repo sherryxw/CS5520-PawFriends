@@ -4,16 +4,10 @@ package edu.neu.madcourse.pawsfriends.Search;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import edu.neu.madcourse.pawsfriends.R;
@@ -24,7 +18,7 @@ public class SearchActivity extends AppCompatActivity{
     private static final String TAG = "SearchActivity";
     private static final int ACTIVITY_NUM = 1;
 
-    private Context mContext = SearchActivity.this;
+    private final Context mContext = SearchActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

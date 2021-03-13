@@ -13,10 +13,6 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
 
-/**
- * Created by User on 5/28/2017.
- */
-
 public class ProfileActivity extends AppCompatActivity{
     private static final String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUM = 4;
@@ -32,9 +28,6 @@ public class ProfileActivity extends AppCompatActivity{
         setupBottomNavigationView();
     }
 
-    /**
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
