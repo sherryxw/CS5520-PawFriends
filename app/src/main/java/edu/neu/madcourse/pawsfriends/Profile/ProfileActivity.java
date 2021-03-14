@@ -29,9 +29,13 @@ public class ProfileActivity extends AppCompatActivity{
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
 
-//        setupBottomNavigationView();
+        setupBottomNavigationView();
         setupToolbar();
     }
+
+    /**
+     * Responsible for setting up the profile toolbar
+     */
 
     private void setupToolbar(){
         Toolbar toolbar = findViewById(R.id.profileToolBar);
