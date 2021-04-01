@@ -12,3 +12,9 @@ Buying a car is a laborious task. Usually, it takes people a lot of time and eff
 - Yibo Zhao, yibozhao1003
 ### Customer representative
 - Abi Singh
+
+## Project structure
+| Location | Description |
+|----------|-------------|
+| docs/index.html | The homepage of this project |
+| docs/communication-plans.pdf | The communication plans. It will be updated if needs change|
