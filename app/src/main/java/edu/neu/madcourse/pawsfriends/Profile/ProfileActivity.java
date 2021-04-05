@@ -8,10 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
-
+import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import android.view.View;
+import android.widget.ImageView;
 
 import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
@@ -41,17 +43,12 @@ public class ProfileActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.profileToolBar);
         setSupportActionBar(findViewById(R.id.profileToolBar));
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Log.d(TAG, "onMenuItemClick: clicked menu item: " + item);
-
-                switch (item.getItemId()){
-                    case R.id.profileMenu:
-                        Log.d(TAG, "onMenuItemClick: Navigating to Profile Preferences.");
-                }
-
-                return false;
+        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
+        profileMenu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to account settings.");
+                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -67,10 +64,4 @@ public class ProfileActivity extends AppCompatActivity{
         menuItem.setChecked(true);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.profile_menu, menu);
-        return true;
-    }
 }
