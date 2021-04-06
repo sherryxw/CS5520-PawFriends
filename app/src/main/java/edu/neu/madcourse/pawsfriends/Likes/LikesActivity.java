@@ -23,15 +23,15 @@ public class LikesActivity extends AppCompatActivity {
     private static final String TAG = "LikesActivity";
     private static final int ACTIVITY_NUM = 3;
 
-    private Context mContext = LikesActivity.this;
+    private final Context mContext = LikesActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_login);
         Log.d(TAG, "onCreate: started.");
 
-        setupBottomNavigationView();
+        //setupBottomNavigationView();
     }
 
     private void setupBottomNavigationView(){
