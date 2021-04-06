@@ -59,7 +59,12 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void tempGridSetup(){
         ArrayList<String> imgURLs = new ArrayList<>();
-        imgURLs.add("https://i.redd.it/9bf67ygj710z.jpg");
+        imgURLs.add("https://i.pinimg.com/originals/e7/81/51/e781515a4ec29b10449acb07f63793da.jpg");
+        imgURLs.add("https://www.felines4us.com/Members/42787/british-shorthair-a201912103745.jpg");
+        imgURLs.add("https://i.pinimg.com/564x/96/02/0a/96020a387946534451b6db061c39054c.jpg");
+        imgURLs.add("https://img.alicdn.com/imgextra/i1/893668264/O1CN01AfUuTp2AuxZHxeIZn_!!893668264.jpg");
+        imgURLs.add("https://i.pinimg.com/originals/84/0b/d1/840bd1e3e817b45feecf867bb9f5ced9.jpg");
+        imgURLs.add("https://static.wixstatic.com/media/4ce24e_5b6ca01de1374e3eaba999541708ec6a~mv2.jpg");
 
         setupImageGrid(imgURLs);
     }
@@ -69,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity{
 
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
         int imageWidth = gridWidth/NUM_GRID_COLUMNS;
+
         gridView.setColumnWidth(imageWidth);
 
         GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview, "", imgURLs);
