@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
-
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(ProfileActivity.this));
 
         setupBottomNavigationView();
         setupToolbar();
@@ -56,18 +59,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void tempGridSetup(){
         ArrayList<String> imgURLs = new ArrayList<>();
-        imgURLs.add("https://pbs.twimg.com/profile_images/616076655547682816/6gMRtQyY.jpg");
         imgURLs.add("https://i.redd.it/9bf67ygj710z.jpg");
-        imgURLs.add("https://c1.staticflickr.com/5/4276/34102458063_7be616b993_o.jpg");
-        imgURLs.add("http://i.imgur.com/EwZRpvQ.jpg");
-        imgURLs.add("http://i.imgur.com/JTb2pXP.jpg");
-        imgURLs.add("https://i.redd.it/59kjlxxf720z.jpg");
-        imgURLs.add("https://i.redd.it/pwduhknig00z.jpg");
-        imgURLs.add("https://i.redd.it/clusqsm4oxzy.jpg");
-        imgURLs.add("https://i.redd.it/svqvn7xs420z.jpg");
-        imgURLs.add("http://i.imgur.com/j4AfH6P.jpg");
-        imgURLs.add("https://i.redd.it/89cjkojkl10z.jpg");
-        imgURLs.add("https://i.redd.it/aw7pv8jq4zzy.jpg");
 
         setupImageGrid(imgURLs);
     }
