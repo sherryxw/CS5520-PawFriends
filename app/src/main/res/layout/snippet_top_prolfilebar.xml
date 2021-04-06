@@ -10,7 +10,7 @@
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/profileToolBar">
+            />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -36,10 +36,6 @@
                     android:src="@drawable/ic_ellipses"/>
 
             </RelativeLayout>
-
-
-        </com.google.android.material.tabs.TabLayout>
-
 
 
     </com.google.android.material.appbar.AppBarLayout>

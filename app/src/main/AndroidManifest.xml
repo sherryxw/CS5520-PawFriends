@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,11 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Likes.LikesActivity" />
-        <activity android:name=".Profile.ProfileActivity" />
-        <activity android:name=".Search.SearchActivity" />
-        <activity android:name=".Share.ShareActivity" />
-        <activity android:name=".Profile.AccountSettingsActivity"></activity>
+        <activity android:name=".Profile.AccountSettingsActivity"/>
+        <activity android:name=".Likes.LikesActivity"/>
+        <activity android:name=".Profile.ProfileActivity"/>
+        <activity android:name=".Search.SearchActivity"/>
+        <activity android:name=".Share.ShareActivity"/>
+
+
+
     </application>
 
 </manifest>
