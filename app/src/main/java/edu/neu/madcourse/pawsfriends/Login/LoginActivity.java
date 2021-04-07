@@ -1,6 +1,7 @@
 package edu.neu.madcourse.pawsfriends.Login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import edu.neu.madcourse.pawsfriends.Home.HomeActivity;
 import edu.neu.madcourse.pawsfriends.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
@@ -91,13 +94,21 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else{
-                                        Log.d(TAG, "signInWithEmail: successful login");
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_success),
-                                                Toast.LENGTH_SHORT).show();
+                                        try{
+                                            if (user.isEmailVerified()) {
+                                                Log.d(TAG, "onComplete: success. email is verified.");
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                            }else {
+                                                Toast.makeText(mContext, "Email is not verified \n Please check your email address!", Toast.LENGTH_SHORT).show();
+                                                mProgressBar.setVisibility(View.GONE);
+                                                mPleaseWait.setVisibility(View.GONE);
+                                                mAuth.signOut();
+                                            }
+                                        }catch (NullPointerException e) {
+                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+                                        }
                                     }
-                                    mProgressBar.setVisibility(View.GONE);
-                                    mPleaseWait.setVisibility(View.GONE);
-
                                     // ...
                                 }
                             });
@@ -105,6 +116,26 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
+        linkSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to register screen");
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+         /*
+         If the user is logged in then navigate to HomeActivity and call 'finish()'
+          */
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
 

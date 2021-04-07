@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setupFirebaseAuth();
 
+        //mAuth.signOut();
     }
 
     private void initImageLoader(){
