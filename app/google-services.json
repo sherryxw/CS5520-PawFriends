@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "370262543252",
+    "project_id": "paw-s-friends",
+    "storage_bucket": "paw-s-friends.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370262543252:android:b10dcb1d874ebc074c1d81",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.pawsfriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370262543252-60ts5heqj422po4l7sf4hfbltj3b4fi1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.neu.madcourse.pawsfriends",
+            "certificate_hash": "7be57264d046d62f5f9df211902db27cf4760da8"
+          }
+        },
+        {
+          "client_id": "370262543252-t876er1c0ujiksl0mcgmpfj0kfruvvk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC038xXM7aKcrEhTNlRF7nsKkL3KCJuZP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370262543252-t876er1c0ujiksl0mcgmpfj0kfruvvk9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
