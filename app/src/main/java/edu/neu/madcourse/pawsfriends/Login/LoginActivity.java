@@ -1,6 +1,7 @@
 package edu.neu.madcourse.pawsfriends.Login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import edu.neu.madcourse.pawsfriends.Home.HomeActivity;
 import edu.neu.madcourse.pawsfriends.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -105,7 +107,30 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
+        linkSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to register screen");
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+         /*
+         If the user is logged in then navigate to HomeActivity and call 'finish()'
+          */
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
+
+
+
 
 
     private void setupFirebaseAuth(){
