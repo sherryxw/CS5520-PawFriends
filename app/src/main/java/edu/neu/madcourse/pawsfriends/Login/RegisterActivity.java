@@ -145,6 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
 
+
                         }
 
                         @Override
@@ -152,6 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         }
                     });
+                    finish();
 
                 } else {
                     // User is signed out

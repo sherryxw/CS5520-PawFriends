@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
@@ -93,13 +94,21 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else{
-                                        Log.d(TAG, "signInWithEmail: successful login");
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_success),
-                                                Toast.LENGTH_SHORT).show();
+                                        try{
+                                            if (user.isEmailVerified()) {
+                                                Log.d(TAG, "onComplete: success. email is verified.");
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                            }else {
+                                                Toast.makeText(mContext, "Email is not verified \n Please check your email address!", Toast.LENGTH_SHORT).show();
+                                                mProgressBar.setVisibility(View.GONE);
+                                                mPleaseWait.setVisibility(View.GONE);
+                                                mAuth.signOut();
+                                            }
+                                        }catch (NullPointerException e) {
+                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+                                        }
                                     }
-                                    mProgressBar.setVisibility(View.GONE);
-                                    mPleaseWait.setVisibility(View.GONE);
-
                                     // ...
                                 }
                             });
@@ -128,9 +137,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
-
-
 
 
     private void setupFirebaseAuth(){
