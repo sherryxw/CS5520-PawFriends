@@ -1,12 +1,32 @@
 import React from "react";
-import Counter from "src/commons/Counter";
+import { Button } from "@material-ui/core";
+import { Route, Switch, useHistory } from "react-router-dom";
+import Example from "src/pages/example";
 
-function App() {
+const App = () => {
+  const history = useHistory();
+
   return (
     <div>
-      <Counter />
+      <Switch>
+        <Route exact path='/example'>
+          <Example />
+        </Route>
+        <Route path='/'>
+          hello world
+          <br />
+          <Button
+            variant='outlined'
+            onClick={() => {
+              history.push("/example");
+            }}
+          >
+            Jump to example page
+          </Button>
+        </Route>
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;
