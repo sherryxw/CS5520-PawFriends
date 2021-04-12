@@ -7,17 +7,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import rootReducer from "./redux";
 import { BrowserRouter } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const store = createStore(rootReducer);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Auth0Provider domain="dev-iwpcvdws.us.auth0.com"
+                 clientId="1uKqfjVWTEyVjwrFTFkfGsFRYE4vznrm" //unique client id to connect auth0
+                 redirectUri={window.location.origin}>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </Auth0Provider>,
   document.getElementById("root")
 );
 
