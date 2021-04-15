@@ -1,6 +1,16 @@
 import React from "react";
-import { Snackbar } from "@material-ui/core";
-import Alert, { Color } from "@material-ui/lab/Alert";
+import "./Toast.css";
+import { Alert } from "reactstrap";
+
+type Color =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "danger"
+  | "warning"
+  | "info"
+  | "light"
+  | "dark";
 
 export type ToastState = {
   open: boolean; // Is the toast open
@@ -17,27 +27,19 @@ type Props = {
  * Toasts inform users of short messages about the app. They appear temporarily, towards the bottom of the screen
  */
 const Toast = ({ toastState, onClose }: Props) => {
-  const handleClose = (event: any, reason: string) => {
-    if (reason !== "clickaway") {
-      onClose();
-    }
+  const handleClose = (event: any) => {
+    onClose();
   };
 
   return (
-    <Snackbar
-      open={toastState.open}
-      autoHideDuration={6000}
-      onClose={handleClose}
+    <Alert
+      className={"custom-toast"}
+      isOpen={toastState.open}
+      toggle={handleClose}
+      fade={true}
     >
-      <Alert
-        elevation={6}
-        variant='filled'
-        severity={toastState.severity}
-        onClose={onClose}
-      >
-        {toastState.message}
-      </Alert>
-    </Snackbar>
+      {toastState.message}
+    </Alert>
   );
 };
 

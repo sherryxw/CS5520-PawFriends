@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button } from "reactstrap";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Example from "src/pages/example";
 import Profile from "./pages/Profile";
@@ -12,10 +12,10 @@ const App = () => {
 
   return (
     <div>
-      <NavbarComponent/>
+      <NavbarComponent />
       <Switch>
-        <Route path="/home" exact component={Home}/>
-        <Route path="/profile/:userId" exact component={Profile}/>
+        <Route path='/home' exact component={Home} />
+        <Route path='/profile/:userId' exact component={Profile} />
         <Route exact path='/example'>
           <Example />
         </Route>
@@ -23,7 +23,7 @@ const App = () => {
           hello world
           <br />
           <Button
-            variant='outlined'
+            outlined
             onClick={() => {
               history.push("/example");
             }}

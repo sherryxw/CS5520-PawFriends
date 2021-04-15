@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Button } from "@material-ui/core";
-import { PlusOne, ExposureNeg1 } from "@material-ui/icons";
+import { Container, Row, Col, Button } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getCounterStore,
@@ -13,35 +12,31 @@ const Counter = () => {
   const dispatch = useDispatch();
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={2}>
-        Counter value: {counterStore}
-      </Grid>
-      <Grid item xs={2}>
-        <Button
-          color='primary'
-          endIcon={<PlusOne />}
-          onClick={() => {
-            dispatch(increaseCounterStore(1));
-          }}
-          variant='contained'
-        >
-          increase
-        </Button>
-      </Grid>
-      <Grid item xs={2}>
-        <Button
-          color='secondary'
-          endIcon={<ExposureNeg1 />}
-          onClick={() => {
-            dispatch(decreaseCounterStore(1));
-          }}
-          variant='contained'
-        >
-          decrease
-        </Button>
-      </Grid>
-    </Grid>
+    <Container>
+      <Row>
+        <Col xs={2}>Counter value: {counterStore}</Col>
+        <Col xs={2}>
+          <Button
+            color='primary'
+            onClick={() => {
+              dispatch(increaseCounterStore(1));
+            }}
+          >
+            increase
+          </Button>
+        </Col>
+        <Col xs={2}>
+          <Button
+            color='secondary'
+            onClick={() => {
+              dispatch(decreaseCounterStore(1));
+            }}
+          >
+            decrease
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

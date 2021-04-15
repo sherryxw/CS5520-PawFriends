@@ -5,8 +5,6 @@ import "../home.css";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faUser, faPowerOff);
-
 import {
   Collapse,
   Container,
@@ -23,6 +21,8 @@ import {
 } from "reactstrap";
 
 import { useAuth0 } from "@auth0/auth0-react";
+
+library.add(faUser, faPowerOff);
 
 const NavbarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
