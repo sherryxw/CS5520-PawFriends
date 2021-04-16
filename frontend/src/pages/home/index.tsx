@@ -62,7 +62,7 @@ function Home(): JSX.Element {
 
   const isDealer = () => {
     return (
-      !isBuyer &&
+      !isBuyer() &&
       isAuthenticated &&
       _.get(user, "email", "") === "zhao.yib@husky.neu.edu"
     );
