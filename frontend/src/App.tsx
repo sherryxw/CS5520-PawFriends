@@ -5,6 +5,7 @@ import Example from "src/pages/example";
 import Profile from "./pages/Profile";
 import NavbarComponent from "./pages/NavbarComponent";
 import "bootstrap/dist/css/bootstrap.css";
+import ProtectedRoute from "./pages/components/ProtectedRoute";
 import buyerManagement from "./pages/BuyerManagement/buyerManagement";
 import Employees from "./pages/Demand/Employees.js";
 
@@ -15,7 +16,7 @@ const App = () => {
     <div>
       <NavbarComponent />
       <Switch>
-        <Route path='/profile/:userId' exact component={Profile} />
+        <ProtectedRoute exact path='/profile/:userId' component={Profile} />
         <Route path={["/management"]} exact component={buyerManagement} />
         <Route
           path={["/management/:postId/offers"]}
