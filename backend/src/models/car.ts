@@ -2,12 +2,16 @@ import { Document, Model, Schema, model } from "mongoose";
 
 export const CarSchema = new Schema(
   {
+    dealerId: {
+      type: String,
+      required: true,
+    },
     vin: {
       type: String,
       required: true,
       unique: true,
     },
-    make: {
+    carMake: {
       type: String,
       required: true,
     },
@@ -32,7 +36,8 @@ export const CarSchema = new Schema(
       required: true,
     },
     trim: String,
-    additionalInformation: String,
+    description: String,
+    imageUrl: String,
   },
   {
     timestamps: true,
@@ -40,15 +45,17 @@ export const CarSchema = new Schema(
 );
 
 export interface ICar extends Document {
+  dealerId: string;
   vin: string;
-  make: string;
+  carMake: string;
   carModel: string;
   mileage: number;
   color: string;
   price: number;
   year: string;
   trim?: string;
-  additionalInformation?: string;
+  description?: string;
+  imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }

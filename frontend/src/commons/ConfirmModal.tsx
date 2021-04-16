@@ -26,13 +26,7 @@ const ConfirmModal = ({
   onCancel,
 }: Props) => {
   return (
-    <Modal
-      centered
-      isOpen={open}
-      onClose={onClose}
-      size={"sm"}
-      toggle={onClose}
-    >
+    <Modal centered isOpen={open} size={"sm"} toggle={onClose}>
       <ModalHeader>{header}</ModalHeader>
       <ModalBody>{text}</ModalBody>
       <ModalFooter>

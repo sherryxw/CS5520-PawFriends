@@ -4,9 +4,13 @@ export const PostSchema = new Schema(
   {
     userId: {
       // the id of the user who makes this post
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
       index: true,
+    },
+    title: {
+      type: String,
+      required: true,
     },
     carMake: String,
     carModel: String,
@@ -16,8 +20,8 @@ export const PostSchema = new Schema(
     mileage: Number,
     trim: String,
     color: String,
-    vin: String,
     drivetrain: String,
+    imageUrl: String,
     price: { type: Number, required: true }, // price is required
     additionalInformation: String,
   },
@@ -27,7 +31,8 @@ export const PostSchema = new Schema(
 );
 
 export interface IPost extends Document {
-  userId: Types.ObjectId;
+  userId: string;
+  title: string;
   carMake?: string;
   carModel?: string;
   carYear?: string;
@@ -36,9 +41,9 @@ export interface IPost extends Document {
   mileage?: number;
   trim?: string;
   color?: string;
+  imageUrl?: string;
   price: number;
-  vin: String;
-  drivetrain: String;
+  drivetrain?: string;
   additionalInformation?: string;
   createdAt: Date;
   updatedAt: Date;

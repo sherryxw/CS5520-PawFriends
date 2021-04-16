@@ -34,9 +34,10 @@ const Toast = ({ toastState, onClose }: Props) => {
   return (
     <Alert
       className={"custom-toast"}
+      fade={true}
       isOpen={toastState.open}
       toggle={handleClose}
-      fade={true}
+      style={{ zIndex: 9999 }}
     >
       {toastState.message}
     </Alert>
