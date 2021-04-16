@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { Link, NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../home.css";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,7 @@ import {
   Container,
   Navbar,
   NavbarToggler,
+  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
