@@ -1,11 +1,11 @@
 import React from "react";
-import { Button } from "reactstrap";
+import { Button } from "@material-ui/core";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Example from "src/pages/example";
 import Profile from "./pages/Profile";
 import NavbarComponent from "./pages/NavbarComponent";
-import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.css";
+import Employees from "./pages/Demand/Employees.js";
 
 const App = () => {
   const history = useHistory();
@@ -14,7 +14,6 @@ const App = () => {
     <div>
       <NavbarComponent />
       <Switch>
-        <Route path='/home' exact component={Home} />
         <Route path='/profile/:userId' exact component={Profile} />
         <Route exact path='/example'>
           <Example />
@@ -23,13 +22,27 @@ const App = () => {
           hello world
           <br />
           <Button
-            outlined
+            variant='outlined'
             onClick={() => {
               history.push("/example");
             }}
           >
             Jump to example page
           </Button>
+          <Route exact path='/Demand'>
+            <Employees />
+          </Route>
+          <Route path='/'>
+            <br />
+            <Button
+              variant='outlined'
+              onClick={() => {
+                history.push("/Demand");
+              }}
+            >
+              Match page
+            </Button>
+          </Route>
         </Route>
       </Switch>
     </div>
@@ -37,3 +50,4 @@ const App = () => {
 };
 
 export default App;
+
