@@ -4,7 +4,7 @@ import getUserMetadate from "../utils/userUtils";
 export const exampleRouter = express.Router();
 
 exampleRouter.get("/", (request, response) => {
-  getUserMetadate("auth0|607cd3d1599f83006ad55079").then((result: any) => {
+  getUserMetadate("auth0|607badd0c9c93e006b8108be").then((result: any) => {
     console.log(result);
   });
 

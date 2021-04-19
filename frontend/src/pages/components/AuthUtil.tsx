@@ -15,8 +15,7 @@ const AuthInfo = () => {
   // use useEffect() to prevent re-rendering in an infinite loop
   useEffect(() => {
     const getUserMetadata = async () => {
-      const domain =
-        process.env.REACT_APP_AUTH0_DOMAIN || "dev-nweoxfrl.us.auth0.com";
+      const domain = process.env.REACT_APP_AUTH0_DOMAIN || "";
       var accessToken = null;
 
       // https://github.com/auth0/auth0-react/issues/65
