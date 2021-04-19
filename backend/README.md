@@ -11,6 +11,8 @@ Create a environment file `.env` in this directory. This file defines environmen
 ```
 MONGO_URL=
 PORT=
+AUTH0_DOMAIN=
+AUTH0_API_TOKEN=
 ```
 
 ## Start the Development
