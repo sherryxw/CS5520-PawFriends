@@ -51,8 +51,7 @@ const Profile = () => {
 
     // send a PATCH request to Auth0 Management API
     // https://auth0.com/docs/quickstart/spa/react/02-calling-an-api#get-an-access-token
-    const domain =
-      process.env.REACT_APP_AUTH0_DOMAIN || "dev-nweoxfrl.us.auth0.com";
+    const domain = process.env.REACT_APP_AUTH0_DOMAIN || "";
 
     var accessToken = null;
     try {
