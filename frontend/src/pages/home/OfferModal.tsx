@@ -28,6 +28,10 @@ import { carMakeList, carModelObject } from "src/api/mock";
 import { IOffer } from "src/types/offer";
 import { ToastState } from "src/commons/Toast";
 
+export const buildCarOption = (car: ICar) => {
+  return `${car.year} ${car.carMake} ${car.carModel}, ${car.mileage} miles, $${car.price}`;
+};
+
 type Props = {
   open: boolean;
   onClose: (update: boolean) => void;
@@ -123,10 +127,6 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
     return api.car.getInventory(dealerId).then((carList) => {
       setInventory(carList);
     });
-  };
-
-  const buildCarOption = (car: ICar) => {
-    return `${car.year} ${car.carMake} ${car.carModel}, ${car.mileage} miles, $${car.price}`;
   };
 
   const renderAddtionalInformationInput = () => {
@@ -368,8 +368,12 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
           </NavItem>
         </Nav>
         <TabContent activeTab={selectedTab}>
-          <TabPane tabId={0}>{renderInventoryTab()}</TabPane>
-          <TabPane tabId={1}>{renderNewCarTab()}</TabPane>
+          <TabPane data-testid={"inventory-tab"} tabId={0}>
+            {renderInventoryTab()}
+          </TabPane>
+          <TabPane data-testid={"new-car-tab"} tabId={1}>
+            {renderNewCarTab()}
+          </TabPane>
         </TabContent>
       </ModalBody>
       <ModalFooter>
