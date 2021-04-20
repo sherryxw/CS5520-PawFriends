@@ -14,22 +14,7 @@ carRouter.get("/:dealerId", (req, res) => {
 });
 // add new car
 carRouter.post("/", (req, res) => {
-  var newCar = new CarModel({
-    dealerId: req.body.dealerId,
-    vin: req.body.vin,
-    carMake: req.body.carMake,
-    carModel: req.body.carModel,
-    mileage: req.body.mileage,
-    color: req.body.color,
-    price: req.body.price,
-    year: req.body.year,
-    trim: req.body.trim,
-    description: req.body.description,
-    imageUrl: req.body.imageUrl,
-    createdAt: req.body.createAt,
-    updatedAt: req.body.updateAt,
-  });
-  CarModel.insertMany(newCar)
+  CarModel.insertMany(req.body)
     .then(function () {
       res.send(200);
     })
