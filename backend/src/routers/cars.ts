@@ -6,11 +6,12 @@ export const carRouter = express.Router();
 carRouter.get("/", (req, res) => {
   CarModel.find().then((cars) => res.send(cars));
 });
-// find car by id
-carRouter.get("/:id", (req, res) => {
-  CarModel.findById(req.params.id).then((car) => res.send(car));
+// find car by dealerId
+carRouter.get("/:dealerId", (req, res) => {
+  CarModel.findOne({ dealerId: req.params.dealerId }).then((car) =>
+    res.send(car)
+  );
 });
-
 // add new car
 carRouter.post("/", (req, res) => {
   var newCar = new CarModel({
@@ -29,6 +30,16 @@ carRouter.post("/", (req, res) => {
     updatedAt: req.body.updateAt,
   });
   CarModel.insertMany(newCar)
+    .then(function () {
+      res.send(200);
+    })
+    .catch(function (error) {
+      res.send(error);
+    });
+});
+// update exist car
+carRouter.put("/:dealerId", (req, res) => {
+  CarModel.updateOne({ dealerId: req.params.dealerId }, { $set: req.body })
     .then(function () {
       res.send(200);
     })
