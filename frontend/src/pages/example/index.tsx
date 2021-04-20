@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Grid, Button } from "@material-ui/core";
+import React, { useState, Fragment } from "react";
+import { Container, Row, Col, Button } from "reactstrap";
 import Counter from "./Counter";
 import Toast, { ToastState } from "src/commons/Toast";
 import ConfirmModal from "src/commons/ConfirmModal";
@@ -15,35 +15,46 @@ const Example = () => {
   const [message, setMessage] = useState<string>("");
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Counter />
-      </Grid>
-      <Grid item xs={12}>
-        <Button
-          color='primary'
-          onClick={() => {
-            setToastState({ ...toastState, open: true });
-          }}
-          variant='contained'
-        >
-          Open Toast
-        </Button>
-      </Grid>
-      <Grid item xs={6}>
-        <Button
-          color='primary'
-          onClick={() => {
-            setModalOpen(true);
-          }}
-          variant='contained'
-        >
-          Call Example API
-        </Button>
-      </Grid>
-      <Grid item xs={6}>
-        API response: {message}
-      </Grid>
+    <Fragment>
+      <Container>
+        <Row className={"mb-4"} xs={12}>
+          <Col xs={12}>
+            <Counter />
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row xs={12} className={"mb-4"}>
+          <Col>
+            <Button
+              color='primary'
+              onClick={() => {
+                setToastState({ ...toastState, open: true });
+              }}
+              variant='contained'
+            >
+              Open Toast
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row className={"mb-4"}>
+          <Col xs={4}>
+            <Button
+              color='primary'
+              onClick={() => {
+                setModalOpen(true);
+              }}
+              variant='contained'
+            >
+              Call Example API
+            </Button>
+          </Col>
+          <Col>API response: {message}</Col>
+        </Row>
+      </Container>
+
       <Toast
         onClose={() => setToastState({ ...toastState, open: false })}
         toastState={toastState}
@@ -61,7 +72,7 @@ const Example = () => {
         }}
         cancelText='No'
       />
-    </Grid>
+    </Fragment>
   );
 };
 

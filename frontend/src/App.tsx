@@ -1,34 +1,33 @@
 import React from "react";
-import { Button } from "@material-ui/core";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Example from "src/pages/example";
 import Profile from "./pages/Profile";
 import NavbarComponent from "./pages/NavbarComponent";
+import Home from "./pages/home";
 import "bootstrap/dist/css/bootstrap.css";
+import ProtectedRoute from "./pages/components/ProtectedRoute";
+import buyerManagement from "./pages/BuyerManagement/buyerManagement";
+import Employees from "./pages/Demand/Employees.js";
 
 const App = () => {
-  const history = useHistory();
-
   return (
     <div>
-      <NavbarComponent/>
+      <NavbarComponent />
       <Switch>
-        <Route path="/profile/:userId" exact component={Profile}/>
+        <ProtectedRoute exact path='/profile/:userId' component={Profile} />
+        <Route path={"/management"} exact component={buyerManagement} />
+        <Route
+          path={["/management/:postId/offers"]}
+          exact
+          component={buyerManagement}
+        />
         <Route exact path='/example'>
           <Example />
         </Route>
-        <Route path='/'>
-          hello world
-          <br />
-          <Button
-            variant='outlined'
-            onClick={() => {
-              history.push("/example");
-            }}
-          >
-            Jump to example page
-          </Button>
+        <Route exact path='/demand'>
+          <Employees />
         </Route>
+        <Route path='/' exact component={Home} />
       </Switch>
     </div>
   );

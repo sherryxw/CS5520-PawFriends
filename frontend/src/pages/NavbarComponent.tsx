@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { Link, NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import "./navbar.css";
+import {
+  faFolderOpen,
+  faPowerOff,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faUser, faPowerOff);
-
 import {
   Collapse,
   Container,
@@ -23,6 +25,8 @@ import {
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+library.add(faFolderOpen, faPowerOff, faUser);
+
 const NavbarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -35,32 +39,33 @@ const NavbarComponent = () => {
 
   return (
     <div className='nav-container'>
-      <Navbar color='light' light expand='md'>
+      <Navbar color='dark' light expand='md'>
         <Container>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='mr-auto' navbar>
               <NavItem>
                 <NavLink
+                  id='home'
                   tag={RouterNavLink}
                   to='/'
                   exact
                   activeClassName='router-link-exact-active'
                 >
-                  Home
+                  Cars Find You
                 </NavLink>
               </NavItem>
             </Nav>
+
             <Nav className='d-none d-md-block' navbar>
               {!isAuthenticated && (
                 <NavItem>
                   <Button
                     id='qsLoginBtn'
-                    color='primary'
-                    className='btn-margin'
+                    className='btn btn-outline-light'
                     onClick={() => loginWithRedirect()}
                   >
-                    Log in
+                    Log In / Sign Up
                   </Button>
                 </NavItem>
               )}
@@ -82,14 +87,28 @@ const NavbarComponent = () => {
                       className='dropdown-profile'
                       activeClassName='router-link-exact-active'
                     >
-                      <FontAwesomeIcon icon={faUser} className='mr-3' /> Profile
+                      <FontAwesomeIcon icon='user' className='mr-3' />
+                      Profile
+                    </DropdownItem>
+                    <DropdownItem
+                      id='management'
+                      tag={RouterNavLink}
+                      to={`/management`}
+                      activeClassName='router-link-exact-active'
+                    >
+                      <FontAwesomeIcon
+                        icon='folder-open'
+                        className='mr-3'
+                        style={{ width: "14px" }}
+                      />
+                      Post Management
                     </DropdownItem>
                     <DropdownItem
                       id='qsLogoutBtn'
                       onClick={() => logoutWithRedirect()}
                     >
-                      <FontAwesomeIcon icon={faPowerOff} className='mr-3' /> Log
-                      out
+                      <FontAwesomeIcon icon='power-off' className='mr-3' />
+                      Log out
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
@@ -100,11 +119,11 @@ const NavbarComponent = () => {
                 <NavItem>
                   <Button
                     id='qsLoginBtn'
-                    color='primary'
+                    className='btn btn-outline-light'
                     block
                     onClick={() => loginWithRedirect({})}
                   >
-                    Log in
+                    Log In
                   </Button>
                 </NavItem>
               </Nav>
@@ -127,7 +146,7 @@ const NavbarComponent = () => {
                   </span>
                 </NavItem>
                 <NavItem>
-                  <FontAwesomeIcon icon={faUser} className='mr-3' />
+                  <FontAwesomeIcon icon='user' className='mr-3' />
                   <RouterNavLink
                     to='/profile'
                     activeClassName='router-link-exact-active'
@@ -136,7 +155,7 @@ const NavbarComponent = () => {
                   </RouterNavLink>
                 </NavItem>
                 <NavItem>
-                  <FontAwesomeIcon icon={faPowerOff} className='mr-3' />
+                  <FontAwesomeIcon icon='power-off' className='mr-3' />
                   <RouterNavLink
                     to='#'
                     id='qsLogoutBtn'

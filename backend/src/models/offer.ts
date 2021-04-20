@@ -13,7 +13,7 @@ export const OfferSchema = new Schema(
       index: true,
     },
     dealderId: {
-      type: Schema.Types.ObjectId,
+      type: String,
       equired: true,
       index: true,
     },
@@ -34,7 +34,7 @@ type OfferStatus = "PENDING" | "ACCEPT" | "DECLINE" | "CANCEL";
 export interface IOffer extends Document {
   postId: Types.ObjectId;
   carId: Types.ObjectId;
-  dealerId: Types.ObjectId;
+  dealerId: String;
   additionalMessage?: string;
   status: OfferStatus;
   createdAt: Date;

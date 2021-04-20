@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from "@material-ui/core";
-import { Check, Close } from "@material-ui/icons";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 type Props = {
   open: boolean; // Is the modal open
@@ -33,13 +26,12 @@ const ConfirmModal = ({
   onCancel,
 }: Props) => {
   return (
-    <Dialog fullWidth maxWidth={"sm"} open={open} onClose={onClose}>
-      <DialogTitle>{header}</DialogTitle>
-      <DialogContent dividers>{text}</DialogContent>
-      <DialogActions>
+    <Modal centered isOpen={open} size={"sm"} toggle={onClose}>
+      <ModalHeader>{header}</ModalHeader>
+      <ModalBody>{text}</ModalBody>
+      <ModalFooter>
         <Button
           color='primary'
-          startIcon={<Check />}
           onClick={() => {
             onConfirm().finally(onClose);
           }}
@@ -49,7 +41,6 @@ const ConfirmModal = ({
         </Button>
         <Button
           color='secondary'
-          startIcon={<Close />}
           onClick={() => {
             if (onCancel) {
               onCancel().finally(onClose);
@@ -57,12 +48,12 @@ const ConfirmModal = ({
               onClose();
             }
           }}
-          variant={"outlined"}
+          outline
         >
           {cancelText}
         </Button>
-      </DialogActions>
-    </Dialog>
+      </ModalFooter>
+    </Modal>
   );
 };
 
