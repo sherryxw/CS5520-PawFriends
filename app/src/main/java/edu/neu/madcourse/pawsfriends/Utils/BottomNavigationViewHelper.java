@@ -27,7 +27,7 @@ public class BottomNavigationViewHelper {
         bottomNavigationViewEx.setTextVisibility(false);
     }
 
-    public static void enableNavigation(final Context context, BottomNavigationViewEx view){
+    public static void enableNavigation(Context mContext, final Context context, BottomNavigationViewEx view){
         view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override

@@ -1,8 +1,13 @@
 package edu.neu.madcourse.pawsfriends.Utils;
 
+//import android.app.Fragment;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,20 +51,6 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-    public Integer getFragmentNumber(Fragment fragment){
-        if(mFragmentNumbers.containsKey(fragment)){
-            return mFragmentNumbers.get(fragment);
-        }else{
-            return null;
-        }
-    }
 
 
-    public String getFragmentName(Integer fragmentNumber){
-        if(mFragmentNames.containsKey(fragmentNumber)){
-            return mFragmentNames.get(fragmentNumber);
-        }else{
-            return null;
-        }
-    }
 }

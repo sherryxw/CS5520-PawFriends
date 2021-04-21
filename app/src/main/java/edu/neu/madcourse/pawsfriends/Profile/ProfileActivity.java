@@ -14,13 +14,16 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,8 @@ import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
 import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
 import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
+import edu.neu.madcourse.pawsfriends.Utils.ViewProfileFragment;
+import edu.neu.madcourse.pawsfriends.models.User;
 
 
 public class ProfileActivity extends AppCompatActivity{
@@ -48,13 +53,23 @@ public class ProfileActivity extends AppCompatActivity{
         Log.d(TAG, "onCreate: started.");
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(ProfileActivity.this));
 
-        setupBottomNavigationView();
-        setupToolbar();
-        setupActivityWidgets();
-        setProfileImage();
+        init();
+        //setupBottomNavigationView();
+        //setupToolbar();
+        //setupActivityWidgets();
+        //setProfileImage();
 
-        tempGridSetup();
+        //tempGridSetup();
 
+    }
+
+    private void init() {
+        Log.d(TAG, "init: inflating " + getString(R.string.profile_fragment));
+        ProfileFragment fragment = new ProfileFragment();
+        FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(getString(R.string.profile_fragment));
+        transaction.commit();
     }
 
     private void tempGridSetup(){
@@ -119,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity{
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
