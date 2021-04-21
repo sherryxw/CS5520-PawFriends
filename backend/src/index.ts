@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import config from "./config";
-import dbInit from "./db-init";
+import { dbInit } from "./dbInit";
 import { exampleRouter } from "./routers";
 
 const serverInit = () => {
