@@ -4,7 +4,7 @@ import config from "./config";
 import dbInit from "./db-init";
 import { exampleRouter } from "./routers";
 import { carRouter } from "./routers/cars";
-import { postRouter } from "./routers/posts";
+
 
 const serverInit = () => {
   const app = express();
@@ -19,7 +19,7 @@ const serverInit = () => {
   });
 
   app.use("/api/cars", carRouter);
-  app.use("/api/posts", postRouter);
+
 
   app.use("/api/example", exampleRouter);
 
