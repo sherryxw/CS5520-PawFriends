@@ -10,14 +10,7 @@
 
 
         <!-- ***********************Top Toolbar***************** -->
-        <RelativeLayout
-            android:id="@+id/relLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
 
-            <include layout="@layout/snippet_top_prolfilebar"/>
-
-        </RelativeLayout>
 
 
         <!-- ********************Middle Section*************************** -->
@@ -44,7 +37,7 @@
                     android:layout_weight="25">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_image"
+                        android:id="@+id/profile_photo"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_centerVertical="true"
