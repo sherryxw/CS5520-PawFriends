@@ -1,0 +1,58 @@
+[
+  {
+    "postId": "post01",
+    "offerId": "offer02",
+    "title": "2015 accord",
+    "status": null,
+    "model": "Accord",
+    "color": "black",
+    "maker": "Honda",
+    "milleage": "10000",
+    "price": "13000",
+    "year": "2019",
+    "pic":
+      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg"
+  },
+  {
+    "postId": "post03",
+    "offerId": "offer01",
+    "title": "2016 accord",
+    "status": null,
+    "model": "Accord",
+    "color": "black",
+    "maker": "Honda",
+    "milleage": "10000",
+    "price": "13000",
+    "year": "2013",
+    "pic":
+      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg"
+  },
+  {
+    "postId": "post03",
+    "offerId": "offer02",
+    "title": "2016 accord",
+    "status": "PENDING",
+    "model": "Accord",
+    "color": "black",
+    "maker": "Honda",
+    "milleage": "10000",
+    "price": "13000",
+    "year": "2013",
+    "pic":
+      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg"
+  },
+  {
+    "postId": "post03",
+    "offerId": "offer03",
+    "title": "2016 accord",
+    "status": "Accepted",
+    "model": "Accord",
+    "color": "black",
+    "maker": "Honda",
+    "milleage": "10000",
+    "price": "13000",
+    "year": "2013",
+    "pic":
+      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg"
+  }
+]
