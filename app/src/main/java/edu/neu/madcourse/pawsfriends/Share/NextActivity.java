@@ -132,7 +132,9 @@ public class NextActivity extends AppCompatActivity {
 //            Log.d(TAG, "setImage: got new bitmap");
 //            image.setImageBitmap(bitmap);
 //        }
-        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
+//        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
+        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
     }
 
 
