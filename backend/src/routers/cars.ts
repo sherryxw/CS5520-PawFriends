@@ -23,8 +23,8 @@ carRouter.post("/", (req, res) => {
     });
 });
 // update exist car
-carRouter.put("/:dealerId", (req, res) => {
-  CarModel.updateOne({ dealerId: req.params.dealerId }, { $set: req.body })
+carRouter.put("/:dealerId/:carId", (req, res) => {
+  CarModel.updateOne({ _id: req.params.carId }, { $set: req.body })
     .then(function () {
       res.send(200);
     })
