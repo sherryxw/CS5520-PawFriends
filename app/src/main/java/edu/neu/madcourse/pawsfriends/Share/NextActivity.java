@@ -68,7 +68,7 @@ public class NextActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
-                String caption = mCaption.getText().toString();
+//                String caption = mCaption.getText().toString();
 /**
                 if(intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));
@@ -141,7 +141,7 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
+//                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
                 Log.d(TAG, "onDataChange: image count: " + imageCount);
 
             }
