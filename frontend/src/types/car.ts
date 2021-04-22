@@ -10,5 +10,5 @@ export interface ICar {
   year: string;
   trim?: string;
   description?: string;
-  imageUrl?: string;
+  image?: string;
 }

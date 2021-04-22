@@ -1,44 +1,45 @@
 import express from "express";
 import { OfferModel } from "../models/offer";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const offerRouter = express.Router();
 // find all offers
 offerRouter.get("/", (req, res) => {
   OfferModel.find().then((offers) => res.send(offers));
 });
+
 // find offer by dealerId
-offerRouter.get("/:dealerId", (req, res) => {
-  OfferModel.findOne({ dealerId: req.params.dealerId }).then((offer) =>
+offerRouter.get("/dealer/:dealerId", (req, res) => {
+  OfferModel.find({ dealerId: req.params.dealerId }).then((offer) =>
     res.send(offer)
   );
 });
+
 // add new offer
-offerRouter.post("/", (req, res) => {
-  OfferModel.insertMany(
-  {
-  postId: mongoose.Types.ObjectId(req.body.postId),
-  carId: mongoose.Types.ObjectId(req.body.carId),
-  dealerId: req.body.dealId,
-  additionalMessage: req.body.additionalMessage,
-  status: req.body.status,
-  createdAt: new Date(req.body.createdAt),
-  updatedAt: new Date(req.body.updatedAt),
+offerRouter.post("/", (req, res, next) => {
+  new OfferModel({
+    postId: req.body.postId,
+    carId: req.body.carId,
+    dealerId: req.body.dealerId,
+    additionalMessage: req.body.additionalMessage,
+    status: req.body.status,
   })
-    .then(function () {
-      res.send(200);
+    .save()
+    .then((offer) => {
+      res.sendStatus(200);
     })
-    .catch(function (error) {
-      res.send(error);
+    .catch((error) => {
+      next(error);
     });
 });
+
 // update existing offer
-offerRouter.put("/:dealerId", (req, res) => {
-  OfferModel.updateOne({ dealerId: req.params.dealerId }, { $set: req.body })
+offerRouter.put("/:id", (req, res, next) => {
+  OfferModel.updateOne({ _id: req.params.id }, { $set: req.body })
     .then(function () {
-      res.send(200);
+      res.sendStatus(200);
     })
     .catch(function (error) {
-      res.send(error);
+      next(error);
     });
 });

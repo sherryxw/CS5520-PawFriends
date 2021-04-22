@@ -10,7 +10,7 @@ export interface IPost {
   mileage?: number;
   trim?: string;
   color?: string;
-  imageUrl?: string;
+  image?: string;
   price: number;
   drivetrain?: string;
   additionalInformation?: string;

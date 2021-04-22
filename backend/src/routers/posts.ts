@@ -2,67 +2,94 @@ import express from "express";
 import { PostModel } from "../models/post";
 
 export const postRouter = express.Router();
-// find all offers
-postRouter.get("/", (req, res) => {
-  PostModel.find(
-  {
-    $or: [
-      { carMake: req.params.carMake },
-      { carModel: req.params.carModel },
-      { zipCode: req.params.zipCode },
-      {
-        price: {
-          $in: [
-            parseInt(req.params.lowestprice),
-            parseInt(req.params.highestprice),
-          ],
-        },
+
+// query posts by conditions
+postRouter.get("/", (req, res, next) => {
+  // apply filter conditions if users specify
+  const andCondition = Array<any>();
+  if (!!req.query.carMake) {
+    andCondition.push({ carMake: req.query.carMake });
+  }
+  if (!!req.query.carModel) {
+    andCondition.push({ carModel: req.query.carModel });
+  }
+  // could ignore zip code here since we haven't integrated map api to compute distance
+  // if (!!req.query.zipCode) {
+  // }
+  if (!!req.query.lowestPrice && !!req.query.highestPrice) {
+    andCondition.push({
+      price: {
+        $in: [
+          parseInt(req.query.lowestPrice as string),
+          parseInt(req.query.highestPrice as string),
+        ],
       },
-    ],
-  }).limit(20).then((posts) => res.send(posts));
-}); 
-// find post by userId
-postRouter.get("/:userId", (req, res) => {
-  PostModel.findOne({userId: req.params.userId }).limit(20).then((post) =>
-    res.send(post)
-  );
-});
-// add new posts
-postRouter.post("/", (req, res) => {
-  PostModel.insertMany(
-  {
-  userId: req.body.userId,
-  title: req.body.title,
-  carMake: req.body.carMake,
-  carModel: req.body.carModel,
-  carYear: req.body.carYear,
-  zipCode: req.body.zipCode,
-  radius: parseInt(req.body.radius),
-  mileage: parseInt(req.body.mileage),
-  trim: req.body.trim,
-  color: req.body.color,
-  imageUrl: req.body.imageUrl,
-  price: parseInt(req.body.price),
-  drivetrain: req.body.drivetrain,
-  additionalInformation: req.body.additionalInformation,
-  createdAt: new Date(req.body.createdAt),
-  updatedAt: new Date(req.body.updatedAt),
-  })
-    .then(function () {
-      res.send(200);
-    })
-    .catch(function (error) {
-      res.send(error);
     });
-});
-// update existing offer
-postRouter.put("/:userId/postId", (req, res) => {
-  PostModel.updateOne({ userId: req.params.userId }, { $set: req.body })
-    .then(function () {
-      res.send(200);
+  } else if (!!req.query.lowestPrice) {
+    andCondition.push({
+      price: { $gte: parseInt(req.query.lowestPrice as string) },
+    });
+  } else if (!!req.query.highestPrice) {
+    andCondition.push({
+      price: { $lte: parseInt(req.query.highestPrice as string) },
+    });
+  }
+
+  const condition = andCondition.length > 0 ? { $and: andCondition } : {};
+
+  PostModel.find(condition)
+    .limit(20)
+    .then((postList) => {
+      res.send({ postList });
     })
-    .catch(function (error) {
-      res.send(error);
+    .catch((error) => {
+      next(error);
     });
 });
 
+// TODO: change the url of the api
+// find post by userId
+postRouter.get("/:userId", (req, res) => {
+  PostModel.findOne({ userId: req.params.userId })
+    .limit(20)
+    .then((post) => res.send(post));
+});
+
+// create a new post
+postRouter.post("/", (req, res, next) => {
+  const post = new PostModel({
+    userId: req.body.userId,
+    title: req.body.title,
+    carMake: req.body.carMake,
+    carModel: req.body.carModel,
+    carYear: req.body.carYear,
+    zipCode: req.body.zipCode,
+    radius: parseInt(req.body.radius),
+    mileage: parseInt(req.body.mileage),
+    trim: req.body.trim,
+    color: req.body.color,
+    image: req.body.image,
+    price: parseInt(req.body.price),
+    drivetrain: req.body.drivetrain,
+    additionalInformation: req.body.additionalInformation,
+  });
+  post
+    .save()
+    .then((newPost) => {
+      res.status(200).send({ post: newPost });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
+// update an exsiting post
+postRouter.put("/:id", (req, res, next) => {
+  PostModel.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .then(function (newPost) {
+      res.send({ post: newPost });
+    })
+    .catch(function (error) {
+      next(error);
+    });
+});

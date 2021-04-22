@@ -24,7 +24,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { IPost } from "src/types/post";
 import { ICar } from "src/types/car";
 import api from "src/api";
-import { carMakeList, carModelObject } from "src/api/mock";
 import { IOffer } from "src/types/offer";
 import { ToastState } from "src/commons/Toast";
 
@@ -47,6 +46,11 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
   const [newOffer, setNewOffer] = useState<IOffer>({} as IOffer);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [saving, setSaving] = useState<boolean>(false);
+  const [carMakeDisabled, setCarMakeDisabled] = useState<boolean>(false);
+  const [carModelDisabled, setCarModelDisabled] = useState<boolean>(false);
+  const [carMakeList, setCarMakeList] = useState<string[]>([]);
+  const [carModelList, setCarModelList] = useState<string[]>([]);
+  const [picture, setPicture] = useState<File>();
 
   useEffect(() => {
     if (open) {
@@ -57,13 +61,49 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
         postId: post._id,
         status: "PENDING",
       });
-      setNewCar({ ...newCar, dealerId });
+      setNewCar({
+        ...newCar,
+        dealerId,
+        carMake: _.get(post, "carMake", ""),
+        carModel: _.get(post, "carModel", ""),
+      });
+      initMakeModelSelect(post);
       setLoadingInventory(true);
-      loadDealerCars(dealerId).then(() => {
+      loadDealerCars(post, dealerId).then(() => {
         setLoadingInventory(false);
       });
     }
   }, [open]);
+
+  const initMakeModelSelect = (post: IPost) => {
+    const carMake = _.get(post, "carMake", "");
+    const carModel = _.get(post, "carModel", "");
+    // if a user post specifies make and model, make and model of new cars are
+    // populated, and we don't allow dealers to change them.
+    if (!!carMake && !!carModel) {
+      setCarMakeList([carMake]);
+      setCarModelList([carModel]);
+      setCarMakeDisabled(true);
+      setCarModelDisabled(true);
+    } else if (!!carMake) {
+      // if the post only specifies make, disable the car make select and enable
+      // the car model select
+      setCarMakeList([carMake]);
+      setCarMakeDisabled(true);
+      api.manufacture.getModelList(carMake).then((modelList) => {
+        setCarModelList(modelList);
+      });
+      setCarModelDisabled(false);
+    } else {
+      // in this case, both field are empty. Dealers are free to select anything
+      api.manufacture.getMakeList().then((makeList) => {
+        setCarMakeList(makeList);
+      });
+      setCarMakeDisabled(false);
+      setCarModelList([]);
+      setCarModelDisabled(false);
+    }
+  };
 
   const handleModalOnClose = (update: boolean) => {
     setSelectedTab(0);
@@ -76,10 +116,11 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
     setSaving(true);
     if (selectedTab === 1) {
       api.car
-        .create(newCar)
-        .then((car) => {
+        .create(newCar, picture!)
+        .then((carId) => {
           const offerCopy = _.cloneDeep(newOffer);
-          offerCopy.carId = car._id;
+          offerCopy.carId = carId;
+          offerCopy.dealerId = _.get(user, "sub", "");
           return api.offer.create(offerCopy).then(() => {
             setToastState({
               open: true,
@@ -123,8 +164,8 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
     }
   };
 
-  const loadDealerCars = (dealerId: string) => {
-    return api.car.getInventory(dealerId).then((carList) => {
+  const loadDealerCars = (post: IPost, dealerId: string) => {
+    return api.car.getInventory(post, dealerId).then((carList) => {
       setInventory(carList);
     });
   };
@@ -159,11 +200,10 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
     if (!carMake) {
       return null;
     } else {
-      const modelList = _.get(carModelObject, carMake, new Array<string>(0));
       return (
         <Fragment>
           <option value=''></option>
-          {modelList.map((model) => (
+          {carModelList.map((model) => (
             <option key={model}>{model}</option>
           ))}
         </Fragment>
@@ -230,8 +270,14 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
             <Label for='offer-modal-car-make'>Make</Label>
             <Input
               id='offer-modal-car-make'
+              disabled={carMakeDisabled}
               name='carMake'
               onChange={(event) => {
+                api.manufacture
+                  .getModelList(event.target.value)
+                  .then((modelList) => {
+                    setCarModelList(modelList);
+                  });
                 setNewCar({
                   ...newCar,
                   carMake: event.target.value,
@@ -251,7 +297,7 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
             {/* Model */}
             <Label for='car-model'>Model</Label>
             <Input
-              disabled={!_.get(newCar, "carMake")}
+              disabled={!_.get(newCar, "carMake", "") || carMakeDisabled}
               id='car-model'
               name='carModel'
               onChange={(event) =>
@@ -325,6 +371,21 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
               }}
               type='text'
               value={_.get(newCar, "color", "")}
+            />
+          </Col>
+          <Col sm={4}>
+            <Label htmlFor='offer-modal-image-upload'>Upload Image</Label>
+            <Input
+              accept='image/*'
+              id='offer-modal-image-upload'
+              type='file'
+              onChange={(event) => {
+                if (event.target.files && event.target.files.item(0)) {
+                  setPicture(event.target.files[0]);
+                } else {
+                  setPicture(undefined);
+                }
+              }}
             />
           </Col>
         </FormGroup>

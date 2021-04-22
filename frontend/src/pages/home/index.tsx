@@ -19,7 +19,6 @@ import { useHistory } from "react-router-dom";
 import { IPost } from "src/types/post";
 import OfferModal from "./OfferModal";
 import api from "src/api";
-import { carMakeList, carModelObject } from "src/api/mock";
 import Toast, { ToastState } from "src/commons/Toast";
 
 function Home(): JSX.Element {
@@ -39,18 +38,20 @@ function Home(): JSX.Element {
     severity: "info",
     message: "",
   });
+  const [carMakeList, setCarMakeList] = useState<string[]>([]);
+  const [carModelList, setCarModelList] = useState<string[]>([]);
   const history = useHistory();
 
   useEffect(() => {
     setLoading(true);
-    api.post
-      .get({ carMake, carModel, zipCode, lowestPrice, highestPrice })
-      .then((postList) => {
-        setPostList(postList);
-      })
-      .then(() => {
-        setLoading(false);
-      });
+    Promise.all([
+      api.post.get({ carMake, carModel, zipCode, lowestPrice, highestPrice }),
+      api.manufacture.getMakeList(),
+    ]).then(([postList, makeList]) => {
+      setPostList(postList);
+      setCarMakeList(makeList);
+      setLoading(false);
+    });
   }, [isAuthenticated]);
 
   const isBuyer = () => {
@@ -94,8 +95,8 @@ function Home(): JSX.Element {
                       <Row>
                         <Col sm={5}>
                           <img
-                            alt='car image'
-                            src={post.imageUrl}
+                            alt={`${post.carYear} ${post.carMake} ${post.carModel}`}
+                            src={post.image}
                             style={{ maxWidth: "280px" }}
                           />
                         </Col>
@@ -191,6 +192,10 @@ function Home(): JSX.Element {
                 const newMake = event.target.value;
                 if (newMake === "Any Make") {
                   setCarModel("");
+                } else {
+                  api.manufacture.getModelList(newMake).then((modelList) => {
+                    setCarModelList(modelList);
+                  });
                 }
                 setCarMake(newMake);
               }}
@@ -299,11 +304,10 @@ function Home(): JSX.Element {
     if (carMake === "Any Make") {
       return null;
     } else {
-      const modelList = _.get(carModelObject, carMake, new Array<string>(0));
       return (
         <Fragment>
           <option>Any Model</option>
-          {modelList.map((model) => (
+          {carModelList.map((model) => (
             <option key={model}>{model}</option>
           ))}
         </Fragment>
@@ -312,7 +316,15 @@ function Home(): JSX.Element {
   };
 
   const handleApplyButtonOnClick = () => {
-    // TODO: apply filter
+    setLoading(true);
+    api.post
+      .get({ carMake, carModel, zipCode, lowestPrice, highestPrice })
+      .then((postList) => {
+        setPostList(postList);
+      })
+      .then(() => {
+        setLoading(false);
+      });
   };
 
   const handleOfferModalOnClose = (update: boolean) => {

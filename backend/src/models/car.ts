@@ -37,7 +37,7 @@ export const CarSchema = new Schema(
     },
     trim: String,
     description: String,
-    imageUrl: String,
+    image: String,
   },
   {
     timestamps: true,
@@ -55,7 +55,7 @@ export interface ICar extends Document {
   year: string;
   trim?: string;
   description?: string;
-  imageUrl?: string;
+  image?: string;
   createdAt: Date;
   updatedAt: Date;
 }

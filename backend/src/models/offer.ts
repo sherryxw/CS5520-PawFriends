@@ -12,9 +12,9 @@ export const OfferSchema = new Schema(
       required: true,
       index: true,
     },
-    dealderId: {
+    dealerId: {
       type: String,
-      equired: true,
+      required: true,
       index: true,
     },
     additionalMessage: String,
