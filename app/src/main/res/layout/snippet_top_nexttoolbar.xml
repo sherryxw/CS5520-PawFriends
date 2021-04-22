@@ -7,7 +7,7 @@
         android:background="@drawable/white_grey_border_bottom"
         >
 
-        <com.google.android.material.tabs.TabLayout
+        <android.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profileToolBar">
@@ -43,7 +43,7 @@
             </RelativeLayout>
 
 
-        </com.google.android.material.tabs.TabLayout>
+        </android.widget.Toolbar>
 
 
 
