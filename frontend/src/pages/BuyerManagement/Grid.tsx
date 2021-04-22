@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -10,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { useParams } from "react-router-dom";
 import { PostAddOutlined } from "@material-ui/icons";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,73 +33,62 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const offers = [
-  {
-    PostId: "post01",
-    OfferId: "offer02",
-    title: "2015 accord",
-    status: null,
-    model: "Accord",
-    color: "black",
-    maker: "Honda",
-    milleage: "10000",
-    price: "13000",
-    year: "2019",
-    pic:
-      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg",
-  },
-  {
-    PostId: "post03",
-    OfferId: "offer01",
-    title: "2016 accord",
-    status: null,
-    model: "Accord",
-    color: "black",
-    maker: "Honda",
-    milleage: "10000",
-    price: "13000",
-    year: "2013",
-    pic:
-      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg",
-  },
-  {
-    PostId: "post03",
-    OfferId: "offer01",
-    title: "2016 accord",
-    status: null,
-    model: "Accord",
-    color: "black",
-    maker: "Honda",
-    milleage: "10000",
-    price: "13000",
-    year: "2013",
-    pic:
-      "https://static.cargurus.com/images/site/2020/08/21/23/00/2020_honda_accord-pic-15568266872342325892-640x480.jpeg",
-  },
-];
+const getData = () =>
+  axios
+    .get("/offer")
+    .then((response: any) => response.data)
+    .catch(console.error); // TODO: GET endpoint
 
 export default function ComplexGrid() {
   const classes = useStyles();
-  const [showStatus, setShowStatus] = React.useState(false);
-  const Status = (status: any) => <Grid item>Status: {status}</Grid>;
-  const flag = false;
+  const { postId: paramsPostId } = useParams<any>();
+  const [offers, setOffers] = useState<any[]>([]);
 
-  const handleOffer = (offer: any, accept: any) => {
-    offer.status = accept;
+  const getMockData = () => {
+    setOffers(
+      require("./data.json").filter(
+        (offer: any) => offer.postId === paramsPostId
+      )
+    );
   };
 
-  const PostForm = () => {
-    const postId: any = useParams();
-    console.log(postId.postId);
-    return postId.postId;
+  useEffect(() => {
+    if (paramsPostId) {
+      // getData().then((data) => setOffers(data).filter((offer: any) => offer.postId === paramsPostId));
+      getMockData();
+    }
+  }, [paramsPostId]);
+
+  const handleOffer = (index: number, status: string) => {
+    setOffers((oldOffers: any[]) => {
+      const temp = [...oldOffers];
+      if(index === -1){
+        temp.forEach(t => t.status = 'CANCEL');
+        return temp;
+      }
+      temp[index].status = status;
+      return temp;
+    });
+    //TODO: add PUT/PATCH endpoint
   };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <List disablePadding>
-          {offers.map((offer) =>
-            offer.PostId === PostForm() ? (
+          {offers.map((offer: any, index: number) => {
+            const {
+              pic,
+              title,
+              model,
+              color,
+              maker,
+              milleage,
+              price,
+              year,
+              status,
+            } = offer;
+            return (
               <React.Fragment>
                 <ListItem>
                   <Grid container spacing={2}>
@@ -108,7 +98,7 @@ export default function ComplexGrid() {
                           <img
                             className={classes.img}
                             alt='complex'
-                            src={offer.pic}
+                            src={pic}
                           />
                         </ListItemText>
                       </ButtonBase>
@@ -117,60 +107,71 @@ export default function ComplexGrid() {
                       <Grid item xs container direction='column' spacing={2}>
                         <Grid item xs>
                           <Typography gutterBottom variant='subtitle1'>
-                            {offer.title}
+                            {title}
                           </Typography>
 
                           <Grid container item xs={12} spacing={3}>
                             <Grid item xs={6}>
-                              Model: {offer.model}
+                              Model: {model}
                             </Grid>
                             <Grid item xs={6}>
-                              Color: {offer.color}
-                            </Grid>
-                          </Grid>
-                          <Grid container item xs={12} spacing={3}>
-                            <Grid item xs={6}>
-                              Maker: {offer.maker}
-                            </Grid>
-                            <Grid item xs={6}>
-                              Milleage: {offer.milleage}
+                              Color: {color}
                             </Grid>
                           </Grid>
                           <Grid container item xs={12} spacing={3}>
                             <Grid item xs={6}>
-                              Price: {offer.price}
+                              Maker: {maker}
                             </Grid>
                             <Grid item xs={6}>
-                              Year: {offer.year}
+                              Milleage: {milleage}
+                            </Grid>
+                          </Grid>
+                          <Grid container item xs={12} spacing={3}>
+                            <Grid item xs={6}>
+                              Price: {price}
+                            </Grid>
+                            <Grid item xs={6}>
+                              Year: {year}
                             </Grid>
                           </Grid>
                         </Grid>
-                        <Grid item spacing={3}>
-                          <Button
-                            variant='contained'
-                            id={offer.title + "accept"}
-                            onClick={() => handleOffer(offer, "Accepted")}
-                          >
-                            Accept
-                          </Button>
+                        {status && <Grid item>Status: {status}</Grid>}
+                        {status === "PENDING" && (
+                          <Grid item spacing={3}>
+                            <Button
+                              className='mr-3'
+                              variant='contained'
+                              id={title + "accept"}
+                              onClick={() => handleOffer(index, "ACCEPT")}
+                            >
+                              Accept
+                            </Button>
 
-                          <Button
-                            variant='contained'
-                            id={offer.title + "decline"}
-                            onClick={() => handleOffer(offer, "Declined")}
-                          >
-                            Decline
-                          </Button>
-                        </Grid>
-                        {showStatus ? <Status status={offer.status} /> : null}
+                            <Button
+                              className='mr-3'
+                              variant='contained'
+                              id={title + "decline"}
+                              onClick={() => handleOffer(index, "DECLINE")}
+                            >
+                              Decline
+                            </Button>
+                          </Grid>
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
                 </ListItem>
               </React.Fragment>
-            ) : null
-          )}
+            );
+          })}
         </List>
+        {offers.length > 0 && <Button
+          variant='contained'
+          id='cancel'
+          onClick={() => handleOffer(-1, "CANCEL")}
+        >
+          Cancel
+        </Button>}
       </Paper>
     </div>
   );
