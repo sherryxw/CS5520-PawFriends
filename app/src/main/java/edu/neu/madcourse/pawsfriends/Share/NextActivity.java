@@ -20,25 +20,28 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.FirebaseMethods;
 import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
+import edu.neu.madcourse.pawsfriends.models.User;
 
 public class NextActivity extends AppCompatActivity {
     private static final String TAG = "NextActivity";
 
-
-
+    // firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private FirebaseMethods mFirebaseMethods;
 
+    // vars
     private String mAppend = "file:/";
     private int imageCount = 0;
+
     private String imgUrl;
     private Bitmap bitmap;
     private Intent intent;
@@ -48,6 +51,8 @@ public class NextActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
+
+        mFirebaseMethods = new FirebaseMethods(NextActivity.this);
 
         setupFirebaseAuth();
 
@@ -86,21 +91,44 @@ public class NextActivity extends AppCompatActivity {
         setImage();
     }
 
+    private void someMethod(){
+        /*
+            Step 1)
+            Create a data model for Photos
 
+            Step 2)
+            Add properties to the Photo Objects (caption, date, imageUrl, photo_id, tags, user_id)
+
+            Step 3)
+            Count the number of photos that the user already has.
+
+            Step 4)
+            a) Upload the photo to Firebase Storage
+            b) insert into 'photos' node
+            c) insert into 'user_photos' node
+         */
+
+
+    }
+
+    /**
+     * gets the image url from the incoming intent and displays the chosen image
+     */
     private void setImage(){
         intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
 
-        if(intent.hasExtra(getString(R.string.selected_image))){
-            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-            Log.d(TAG, "setImage: got new image url: " + imgUrl);
-            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
-        }
-        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
-            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
-            Log.d(TAG, "setImage: got new bitmap");
-            image.setImageBitmap(bitmap);
-        }
+//        if(intent.hasExtra(getString(R.string.selected_image))){
+//            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+//            Log.d(TAG, "setImage: got new image url: " + imgUrl);
+//            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+//        }
+//        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+//            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+//            Log.d(TAG, "setImage: got new bitmap");
+//            image.setImageBitmap(bitmap);
+//        }
+        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
     }
 
 
@@ -141,7 +169,7 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
+                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
                 Log.d(TAG, "onDataChange: image count: " + imageCount);
 
             }
