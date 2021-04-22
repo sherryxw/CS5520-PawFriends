@@ -38,6 +38,9 @@ public class NextActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseMethods mFirebaseMethods;
 
+    //widgets
+    private EditText mCaption;
+
     // vars
     private String mAppend = "file:/";
     private int imageCount = 0;
@@ -45,7 +48,6 @@ public class NextActivity extends AppCompatActivity {
     private String imgUrl;
     private Bitmap bitmap;
     private Intent intent;
-    private EditText mCaption;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class NextActivity extends AppCompatActivity {
         setContentView(R.layout.activity_next);
 
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
+        mCaption = (EditText) findViewById(R.id.caption);
 
         setupFirebaseAuth();
 
@@ -73,6 +76,9 @@ public class NextActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
+                String caption = mCaption.getText().toString();
+                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl);
+//                Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
 //                String caption = mCaption.getText().toString();
 /**
                 if(intent.hasExtra(getString(R.string.selected_image))){
@@ -107,8 +113,6 @@ public class NextActivity extends AppCompatActivity {
             b) insert into 'photos' node
             c) insert into 'user_photos' node
          */
-
-
     }
 
     /**

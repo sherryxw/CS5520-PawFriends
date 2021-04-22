@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 
 import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.models.User;
@@ -29,6 +32,7 @@ public class FirebaseMethods {
     private String userID;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+    StorageReference mStorageReference;
 
 
     private final Context mContext;
@@ -38,11 +42,33 @@ public class FirebaseMethods {
         mContext = context;
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
 
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
     }
+
+    public void uploadNewPhoto(String photoType, String caption, int count, String imgUrl){
+        Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
+
+        FilePaths filePaths = new FilePaths();
+        //case1) new photo
+        if(photoType.equals(mContext.getString(R.string.new_photo))){
+            Log.d(TAG, "uploadNewPhoto: uploading NEW photo.");
+
+            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            StorageReference storageReference = mStorageReference
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
+
+        }
+        //case new profile photo
+        else if(photoType.equals(mContext.getString(R.string.profile_photo))){
+            Log.d(TAG, "uploadNewPhoto: uploading new PROFILE photo");
+        }
+
+    }
+
 
     public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
         Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
