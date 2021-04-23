@@ -1,12 +1,15 @@
-package edu.neu.madcourse.pawsfriends;
+package edu.neu.madcourse.pawsfriends.Utils;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
 import edu.neu.madcourse.pawsfriends.Utils.FirebaseMethods;
 import edu.neu.madcourse.pawsfriends.Utils.SquareImageView;
@@ -70,6 +74,7 @@ public class ViewPostFragment extends Fragment {
     private String photoUsername = "";
     private String profilePhotoUrl = "";
     private UserAccountSettings mUserAccountSettings;
+    private GestureDetector mGestureDetector;
 
     @Nullable
     @Override
@@ -87,6 +92,8 @@ public class ViewPostFragment extends Fragment {
         mHeartWhite = (ImageView) view.findViewById(R.id.image_heart);
         mProfileImage = (ImageView) view.findViewById(R.id.profile_photo);
 
+        mGestureDetector = new GestureDetector(getActivity(), new GestureListener());
+
         try{
             mPhoto = getPhotoFromBundle();
             UniversalImageLoader.setImage(mPhoto.getImage_path(), mPostImage, null, "");
@@ -99,8 +106,39 @@ public class ViewPostFragment extends Fragment {
         setupFirebaseAuth();
         setupBottomNavigationView();
         getPhotoDetails();
+        //setupWidgets();
+
+        testToggle();
 
         return view;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void testToggle(){
+        mHeartRed.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mGestureDetector.onTouchEvent(event);
+            }
+        });
+        mHeartWhite.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mGestureDetector.onTouchEvent(event);
+            }
+        });
+    }
+
+    public class GestureListener extends GestureDetector.SimpleOnGestureListener{
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return super.onDown(e);
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            return super.onDoubleTap(e);
+        }
     }
 
     private void getPhotoDetails(){
@@ -133,7 +171,6 @@ public class ViewPostFragment extends Fragment {
         }else{
             mTimestamp.setText("TODAY");
         }
-
         UniversalImageLoader.setImage(mUserAccountSettings.getProfile_photo(), mProfileImage, null, "");
         mUsername.setText(mUserAccountSettings.getUsername());
     }

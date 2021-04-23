@@ -4,37 +4,18 @@ package edu.neu.madcourse.pawsfriends.Profile;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 
 
-import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import edu.neu.madcourse.pawsfriends.R;
-import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
-import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
-import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
-import edu.neu.madcourse.pawsfriends.Utils.ViewProfileFragment;
-import edu.neu.madcourse.pawsfriends.ViewPostFragment;
+import edu.neu.madcourse.pawsfriends.Utils.ViewPostFragment;
 import edu.neu.madcourse.pawsfriends.models.Photo;
-import edu.neu.madcourse.pawsfriends.models.User;
 
 
 public class ProfileActivity extends AppCompatActivity implements ProfileFragment.OnGridImageSelectedListener{
