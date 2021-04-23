@@ -25,11 +25,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileFragmen
     @Override
     public void onGridImageSelected(Photo photo, int activityNumber) {
         Log.d(TAG, "onGridImageSelected: selected an image gridview: " + photo.toString());
-
         ViewPostFragment fragment = new ViewPostFragment();
         Bundle args = new Bundle();
         args.putParcelable(getString(R.string.photo), photo);
         args.putInt(getString(R.string.activity_number), activityNumber);
+
         fragment.setArguments(args);
 
         FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
@@ -53,7 +53,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
-//        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(ProfileActivity.this));
 
         init();
 
