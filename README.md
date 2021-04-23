@@ -79,7 +79,7 @@ collection: user
 collection: post
 | Field                        | Type                                | Usage                              |
 | ---------------------------- | ------------------------------------|------------------------------------|
-| serId                        | string                              | user's Id in MongoDB               |
+| userId                       | string                              | user's Id in MongoDB               |
 | title                        | string                              | the post's title                   |
 | carMake?                     | string                              | vechicle manufacturers             |
 | carModel?                    | string                              | venicle model                      |
@@ -107,7 +107,7 @@ collection: offer
 | additionalInformation?       | string                              | additional information             |
 | status                       | OfferStatus(enum)                   | offer status                       |
 | creaedAt                     | Date                                | offer created date                 |
-| updatedAt                    |  Date                               | offer updated date                 |
+| updatedAt                    | Date                                | offer updated date                 |
 
  *OfferStatus = "PENDING" | "ACCEPT" | "DECLINE" | "CANCEL";
 
