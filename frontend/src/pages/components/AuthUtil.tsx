@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-// https://auth0.com/docs/quickstart/spa/react/02-calling-an-api#get-an-access-token
-const AuthInfo = () => {
+// https://reactjs.org/docs/hooks-custom.html
+function useAuthInfo() {
   const { user, getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const [userInfo, setUserInfo] = useState({
     email: "",
@@ -12,7 +12,7 @@ const AuthInfo = () => {
     role: "",
   });
 
-  // use useEffect() to prevent re-rendering in an infinite loop
+  // https://auth0.com/docs/quickstart/spa/react/02-calling-an-api#get-an-access-token
   useEffect(() => {
     const getUserMetadata = async () => {
       const domain = process.env.REACT_APP_AUTH0_DOMAIN || "";
@@ -57,6 +57,6 @@ const AuthInfo = () => {
   }, [user.email, user.sub, getAccessTokenSilently, getAccessTokenWithPopup]);
 
   return userInfo;
-};
+}
 
-export default AuthInfo;
+export default useAuthInfo;

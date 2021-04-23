@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Container, Box, Grid, Button, TextField } from "@material-ui/core";
-import AuthInfo from "src/pages/components/AuthUtil";
+import useAuthInfo from "src/pages/components/AuthUtil";
 
 const axios = require("axios").default;
 
@@ -14,45 +14,26 @@ const Profile = () => {
     getAccessTokenWithPopup,
   } = useAuth0();
 
-  const [newName, setUsername] = useState("");
-  const [newNumber, setPhoneNumber] = useState("");
+  var userInfo = useAuthInfo();
 
-  var userInfo = {
-    email: "",
-    user_name: "",
-    phone_number: "",
-    role: "",
-  };
-
-  if (userInfo.email === "") {
-    userInfo = AuthInfo();
-  }
-
-  if (newName !== "") {
-    userInfo.user_name = newName;
-  }
-
-  if (newNumber !== "") {
-    userInfo.phone_number = newNumber;
-  }
+  // created to force re-render
+  const [refresh, setRefresh] = useState(0);
 
   // https://auth0.com/docs/users/update-metadata-with-the-management-api
   const updateProfile = async () => {
-    if (newName.length < 6) {
+    if (userInfo.user_name.length < 6) {
       alert("Username must be at least has a length of 6. Please try again.");
       return;
     }
-    if (newNumber.length !== 10 || isNaN(+newNumber)) {
+    if (userInfo.phone_number.length !== 10 || isNaN(+userInfo.phone_number)) {
       alert(
         "Phone number must be 10 digits and contain no special characters. Please try again."
       );
       return;
     }
-
     // send a PATCH request to Auth0 Management API
     // https://auth0.com/docs/quickstart/spa/react/02-calling-an-api#get-an-access-token
     const domain = process.env.REACT_APP_AUTH0_DOMAIN || "";
-
     var accessToken = null;
     try {
       accessToken = await getAccessTokenSilently({
@@ -65,7 +46,6 @@ const Profile = () => {
         scope: "update:current_user_metadata",
       });
     }
-
     var options = {
       method: "PATCH",
       url: `https://${domain}/api/v2/users/${user.sub}`,
@@ -73,13 +53,16 @@ const Profile = () => {
         authorization: `Bearer ${accessToken}`,
         "content-type": "application/json",
       },
-      data: { user_metadata: { user_name: newName, phone_number: newNumber } },
+      data: {
+        user_metadata: {
+          user_name: userInfo.user_name,
+          phone_number: userInfo.phone_number,
+        },
+      },
     };
-
     axios
       .request(options)
       .then(function (response: any) {
-        console.log(response.data);
         alert("Information has been updated successfully!");
       })
       .catch(function (error: any) {
@@ -87,6 +70,18 @@ const Profile = () => {
         alert("Something goes wrong. Please try again later.");
       });
   };
+
+  function updateUserName(newName: string) {
+    userInfo.user_name = newName;
+    const newrefresh = refresh + 1;
+    setRefresh(newrefresh);
+  }
+
+  function updatePhoneNumber(newNumber: string) {
+    userInfo.phone_number = newNumber;
+    const newrefresh = refresh + 1;
+    setRefresh(newrefresh);
+  }
 
   var currentDate = new Date();
   var hrs = currentDate.getHours();
@@ -129,7 +124,7 @@ const Profile = () => {
                 label='Username'
                 fullWidth
                 value={userInfo.user_name}
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(event) => updateUserName(event.target.value)}
               />
               <TextField
                 required
@@ -137,7 +132,7 @@ const Profile = () => {
                 label='Phone number'
                 fullWidth
                 value={userInfo.phone_number}
-                onChange={(event) => setPhoneNumber(event.target.value)}
+                onChange={(event) => updatePhoneNumber(event.target.value)}
               />
               <TextField
                 disabled
