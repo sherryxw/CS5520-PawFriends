@@ -29,6 +29,7 @@ import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
 import edu.neu.madcourse.pawsfriends.models.User;
 
 public class NextActivity extends AppCompatActivity {
+
     private static final String TAG = "NextActivity";
 
     // firebase
@@ -46,8 +47,6 @@ public class NextActivity extends AppCompatActivity {
     private int imageCount = 0;
     private String imgUrl;
 
-//    private Bitmap bitmap;
-//    private Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class NextActivity extends AppCompatActivity {
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
                 String caption = mCaption.getText().toString();
-                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl);
+                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
 //                Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
 //                String caption = mCaption.getText().toString();
 /**
@@ -121,18 +120,6 @@ public class NextActivity extends AppCompatActivity {
     private void setImage(){
         Intent intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
-
-//        if(intent.hasExtra(getString(R.string.selected_image))){
-//            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-//            Log.d(TAG, "setImage: got new image url: " + imgUrl);
-//            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
-//        }
-//        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
-//            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
-//            Log.d(TAG, "setImage: got new bitmap");
-//            image.setImageBitmap(bitmap);
-//        }
-//        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
         imgUrl = intent.getStringExtra(getString(R.string.selected_image));
         UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
     }
