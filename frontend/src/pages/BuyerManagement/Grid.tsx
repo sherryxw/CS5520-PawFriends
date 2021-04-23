@@ -10,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { useParams } from "react-router-dom";
 import { PostAddOutlined } from "@material-ui/icons";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,7 @@ const getData = () =>
     .catch(console.error); // TODO: GET endpoint
 
 export default function ComplexGrid() {
+  const { user } = useAuth0();
   const classes = useStyles();
   const { postId: paramsPostId } = useParams<any>();
   const [offers, setOffers] = useState<any[]>([]);
@@ -62,8 +64,8 @@ export default function ComplexGrid() {
   const handleOffer = (index: number, status: string) => {
     setOffers((oldOffers: any[]) => {
       const temp = [...oldOffers];
-      if(index === -1){
-        temp.forEach(t => t.status = 'CANCEL');
+      if (index === -1) {
+        temp.forEach((t) => (t.status = "CANCEL"));
         return temp;
       }
       temp[index].status = status;
@@ -165,13 +167,15 @@ export default function ComplexGrid() {
             );
           })}
         </List>
-        {offers.length > 0 && <Button
-          variant='contained'
-          id='cancel'
-          onClick={() => handleOffer(-1, "CANCEL")}
-        >
-          Cancel
-        </Button>}
+        {offers.length > 0 && (
+          <Button
+            variant='contained'
+            id='cancel'
+            onClick={() => handleOffer(-1, "CANCEL")}
+          >
+            Cancel
+          </Button>
+        )}
       </Paper>
     </div>
   );

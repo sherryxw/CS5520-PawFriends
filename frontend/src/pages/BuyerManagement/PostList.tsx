@@ -43,7 +43,6 @@ export default function PermanentDrawerLeft() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position='fixed' className={classes.appBar}></AppBar>
       <Drawer
         className={classes.drawer}
         variant='permanent'

@@ -8,6 +8,16 @@ carRouter.get("/", (req, res) => {
   CarModel.find().then((cars) => res.send(cars));
 });
 
+carRouter.get("/:id", (request, response, next) => {
+  CarModel.findById(request.params.id)
+    .then((car) => {
+      response.send(car);
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
 // find car by dealerId
 carRouter.get("/dealer/:dealerId", (req, res, next) => {
   const andCondition: any[] = [];

@@ -15,6 +15,14 @@ offerRouter.get("/dealer/:dealerId", (req, res) => {
   );
 });
 
+offerRouter.get("/buyer/post/:postId", (req, res, next) => {
+  OfferModel.find({ postId: req.params.postId })
+    .then((offerList) => {
+      res.send(offerList);
+    })
+    .catch((error) => next(error));
+});
+
 // add new offer
 offerRouter.post("/", (req, res, next) => {
   new OfferModel({
@@ -35,9 +43,9 @@ offerRouter.post("/", (req, res, next) => {
 
 // update existing offer
 offerRouter.put("/:id", (req, res, next) => {
-  OfferModel.updateOne({ _id: req.params.id }, { $set: req.body })
-    .then(function () {
-      res.sendStatus(200);
+  OfferModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(function (offer) {
+      res.send(offer);
     })
     .catch(function (error) {
       next(error);

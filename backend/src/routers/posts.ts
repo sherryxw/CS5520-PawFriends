@@ -47,12 +47,13 @@ postRouter.get("/", (req, res, next) => {
     });
 });
 
-// TODO: change the url of the api
-// find post by userId
-postRouter.get("/:userId", (req, res) => {
-  PostModel.findOne({ userId: req.params.userId })
-    .limit(20)
-    .then((post) => res.send(post));
+// find post by buyer's id
+postRouter.get("/buyer/:buyerId", (req, res, next) => {
+  PostModel.find({ userId: req.params.buyerId })
+    .then((post) => res.send(post))
+    .catch((error) => {
+      next(error);
+    });
 });
 
 // create a new post

@@ -13,7 +13,7 @@ export const get = async (query?: {
   if (query?.carMake && query.carMake !== "Any Make") {
     params.carMake = query.carMake;
   }
-  if (query?.carMake && query.carModel !== "Any Model") {
+  if (query?.carModel && query.carModel !== "Any Model") {
     params.carModel = query.carModel;
   }
   if (query?.zipCode) {
@@ -27,4 +27,9 @@ export const get = async (query?: {
     params,
   });
   return response.data.postList as IPost[];
+};
+
+export const getBuyerPost = async (buyerId: string) => {
+  const response = await client.get(`/posts/buyer/${buyerId}`);
+  return response.data as IPost[];
 };

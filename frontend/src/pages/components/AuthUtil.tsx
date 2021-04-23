@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import _ from "lodash";
 
 // https://reactjs.org/docs/hooks-custom.html
 function useAuthInfo() {
@@ -41,8 +42,8 @@ function useAuthInfo() {
 
         const { user_metadata } = await metadataResponse.json();
         const user_info = {
-          email: user.email,
-          user_id: user.sub,
+          email: _.get(user, "email", ""),
+          user_id: _.get(user, "sub", ""),
           user_name: user_metadata.user_name,
           phone_number: user_metadata.phone_number,
           role: user_metadata.role,
@@ -54,7 +55,7 @@ function useAuthInfo() {
     };
 
     getUserMetadata();
-  }, [user.email, user.sub, getAccessTokenSilently, getAccessTokenWithPopup]);
+  }, [user, getAccessTokenSilently, getAccessTokenWithPopup]);
 
   return userInfo;
 }

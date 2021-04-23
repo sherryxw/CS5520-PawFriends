@@ -6,7 +6,7 @@ import NavbarComponent from "./pages/NavbarComponent";
 import Home from "./pages/home";
 import "bootstrap/dist/css/bootstrap.css";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
-import buyerManagement from "./pages/BuyerManagement/buyerManagement";
+import BuyerManagement from "./pages/BuyerManagement";
 import Employees from "./pages/Demand/Employees.js";
 
 const App = () => {
@@ -15,11 +15,11 @@ const App = () => {
       <NavbarComponent />
       <Switch>
         <ProtectedRoute exact path='/profile/:userId' component={Profile} />
-        <Route path={"/management"} exact component={buyerManagement} />
+        <Route path={"/management"} exact component={BuyerManagement} />
         <Route
           path={["/management/:postId/offers"]}
           exact
-          component={buyerManagement}
+          component={BuyerManagement}
         />
         <Route exact path='/example'>
           <Example />

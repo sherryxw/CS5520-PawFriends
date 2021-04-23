@@ -20,6 +20,7 @@ import { IPost } from "src/types/post";
 import OfferModal from "./OfferModal";
 import api from "src/api";
 import Toast, { ToastState } from "src/commons/Toast";
+import useAuthInfo from "src/pages/components/AuthUtil";
 
 function Home(): JSX.Element {
   const { user, isAuthenticated } = useAuth0();
@@ -41,6 +42,7 @@ function Home(): JSX.Element {
   const [carMakeList, setCarMakeList] = useState<string[]>([]);
   const [carModelList, setCarModelList] = useState<string[]>([]);
   const history = useHistory();
+  const authInfo = useAuthInfo();
 
   useEffect(() => {
     setLoading(true);
@@ -55,17 +57,12 @@ function Home(): JSX.Element {
   }, [isAuthenticated]);
 
   const isBuyer = () => {
-    return (
-      isAuthenticated &&
-      _.get(user, "email", "") === "zhao.yib@northeastern.edu"
-    );
+    return isAuthenticated && _.get(authInfo, "role", "") === "BUYER";
   };
 
   const isDealer = () => {
     return (
-      !isBuyer() &&
-      isAuthenticated &&
-      _.get(user, "email", "") === "zhao.yib@husky.neu.edu"
+      !isBuyer() && isAuthenticated && _.get(authInfo, "role", "") === "DEALER"
     );
   };
 

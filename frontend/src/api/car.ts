@@ -33,3 +33,8 @@ export const create = async (car: ICar, image: File) => {
   const response = await client.post("/cars", car);
   return response.data as string;
 };
+
+export const get = async (id: string) => {
+  const response = await client.get(`/cars/${id}`);
+  return response.data as ICar;
+};
