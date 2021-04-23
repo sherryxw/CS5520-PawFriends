@@ -39,6 +39,7 @@ import edu.neu.madcourse.pawsfriends.models.UserAccountSettings;
 import edu.neu.madcourse.pawsfriends.models.UserSettings;
 
 public class FirebaseMethods {
+
     private static final String TAG = "FirebaseMethods";
 
     //firebase
@@ -126,6 +127,12 @@ public class FirebaseMethods {
         //case new profile photo
         else if(photoType.equals(mContext.getString(R.string.profile_photo))){
             Log.d(TAG, "uploadNewPhoto: uploading new PROFILE photo");
+
+            ((AccountSettingsActivity)mContext).setViewPager(
+                    ((AccountSettingsActivity)mContext).pagerAdapter
+                            .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
+            );
+
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             StorageReference storageReference = mStorageReference

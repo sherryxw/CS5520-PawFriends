@@ -44,16 +44,15 @@ public class NextActivity extends AppCompatActivity {
     // vars
     private String mAppend = "file:/";
     private int imageCount = 0;
-
     private String imgUrl;
-    private Bitmap bitmap;
-    private Intent intent;
+
+//    private Bitmap bitmap;
+//    private Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
-
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
         mCaption = (EditText) findViewById(R.id.caption);
 
@@ -94,6 +93,7 @@ public class NextActivity extends AppCompatActivity {
 
             }
         });
+
         setImage();
     }
 
@@ -119,7 +119,7 @@ public class NextActivity extends AppCompatActivity {
      * gets the image url from the incoming intent and displays the chosen image
      */
     private void setImage(){
-        intent = getIntent();
+        Intent intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
 
 //        if(intent.hasExtra(getString(R.string.selected_image))){

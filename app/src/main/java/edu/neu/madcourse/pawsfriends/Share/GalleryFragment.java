@@ -1,6 +1,5 @@
 package edu.neu.madcourse.pawsfriends.Share;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.FilePaths;
 import edu.neu.madcourse.pawsfriends.Utils.FileSearch;
 import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
-import edu.neu.madcourse.pawsfriends.Profile.AccountSettingsActivity;
 
 public class GalleryFragment extends Fragment {
     private static final String TAG = "GalleryFragment";
@@ -46,6 +44,7 @@ public class GalleryFragment extends Fragment {
     private ProgressBar mProgressBar;
     private Spinner directorySpinner;
 
+    // vars
     private ArrayList<String> directories;
     private String mAppend = "file:/";
     private String mSelectedImage;
@@ -88,6 +87,7 @@ public class GalleryFragment extends Fragment {
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
             }

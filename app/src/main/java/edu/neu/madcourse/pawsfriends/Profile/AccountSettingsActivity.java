@@ -32,15 +32,14 @@ import edu.neu.madcourse.pawsfriends.Utils.FirebaseMethods;
 import edu.neu.madcourse.pawsfriends.Utils.SectionsStatePagerAdapter;
 
 public class AccountSettingsActivity extends AppCompatActivity {
+
     private static final String TAG = "AccountSettingsActivity";
     private static final int ACTIVITY_NUM = 4;
 
     private Context mContext;
-    private SectionsStatePagerAdapter pagerAdapter;
+    public SectionsStatePagerAdapter pagerAdapter;
     private ViewPager mViewPager;
     private RelativeLayout mRelativeLayout;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +65,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void getIncomingIntent(){
         Intent intent = getIntent();

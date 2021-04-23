@@ -263,11 +263,11 @@ public class EditProfileFragment extends Fragment implements
 
 
     // not use could be comment
-    private void setProfileImage(){
-        Log.d(TAG, "setProfileImage: setting profile image.");
-        String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";
-        UniversalImageLoader.setImage(imgURL, mProfilePhoto, null, "https://");
-    }
+//    private void setProfileImage(){
+//        Log.d(TAG, "setProfileImage: setting profile image.");
+//        String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";
+//        UniversalImageLoader.setImage(imgURL, mProfilePhoto, null, "https://");
+//    }
 
     private void setProfileWidgets(UserSettings userSettings){
         Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
@@ -292,7 +292,7 @@ public class EditProfileFragment extends Fragment implements
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
                 getActivity().startActivity(intent);
-//                getActivity().finish();
+                getActivity().finish();
             }
         });
     }
