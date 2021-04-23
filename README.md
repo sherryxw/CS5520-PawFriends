@@ -50,7 +50,7 @@ Buying a car is a laborious task. Usually, it takes people a lot of time and eff
 collection: car 
 | Field                        | Type                                |   Usage                            |
 | ---------------------------- | ------------------------------------|------------------------------------|
-| dealerId                     | string                              | dealers' Id in MongoDb             |
+| dealerId                     | string                              | dealers' Id in MongoDN             |
 | vin                          | string                              | Vehicle Identification Number      |
 | carMake                      | string                              | vechicle manufacturers             |
 | carModel                     | string                              | venicle model                      |
@@ -66,7 +66,7 @@ collection: user
 | Field                        | Type                                |   Usage                            |
 | ---------------------------- | ------------------------------------|------------------------------------|
 | auth0Id                      | string                              | user's Id in Auth0                 |
-| username                     | string                              | username in MongoDb                |
+| username                     | string                              | username in MongoDB                |
 | email                        | string                              | user's email                       |
 | phone                        | string                              | user's phone number                |
 | role                         | UserRole(enum)                      | user's identity : buyer or dealer  |
@@ -79,12 +79,12 @@ collection: user
 collection: post
 | Field                        | Type                                | Usage                              |
 | ---------------------------- | ------------------------------------|------------------------------------|
-| serId                        | string                              | user's Id in MongoDb               |
+| serId                        | string                              | user's Id in MongoDB               |
 | title                        | string                              | the post's title                   |
 | carMake?                     | string                              | vechicle manufacturers             |
 | carModel?                    | string                              | venicle model                      |
 | carYear?                     | string                              | vehicle registered year            |
-| zipCode?                     | string                              | users' zipCode                     |
+| zipCode?                     | string                              | users' zip code                    |
 | radius?                      | number                              | radius                             |
 | mileage?                     | number                              | venicle mileage                    |
 | trim?                        | string                              | venicle trim                       |
@@ -101,9 +101,9 @@ collection: post
 collection: offer
 | Field                        | Type                                |   Usage                            |
 | ---------------------------- | ------------------------------------|------------------------------------|
-| postId                       | Type.ObjectId                       | postId in MongoDb                  |
-| carId                        | Type.ObjectId                       | carId in MongoDb                   |
-| dealerId                     | string                              | dealer's Id in MongoDb             |
+| postId                       | Type.ObjectId                       | postId in MongoDB                  |
+| carId                        | Type.ObjectId                       | carId in MongoDB                   |
+| dealerId                     | string                              | dealer's Id in MongoDB             |
 | additionalInformation?       | string                              | additional information             |
 | status                       | OfferStatus(enum)                   | offer status                       |
 | creaedAt                     | Date                                | offer created date                 |
@@ -116,7 +116,7 @@ collection: offer
 Create a folder on your pc <br />
 Open two terminals, one starts backend and the other starts frontend
 
-You pc should install package manager [npm](https://docs.npmjs.com/cli/v6/commands/npm-install).
+Your pc should install package manager [npm](https://docs.npmjs.com/cli/v6/commands/npm-install).
 ```bash
 cd the folder 
 git clone https://github.ccs.neu.edu/2021SPCS5500SB/project-cars_find_you.git
