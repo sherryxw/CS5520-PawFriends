@@ -30,6 +30,7 @@ import edu.neu.madcourse.pawsfriends.R;
 import edu.neu.madcourse.pawsfriends.Utils.FilePaths;
 import edu.neu.madcourse.pawsfriends.Utils.FileSearch;
 import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
+import edu.neu.madcourse.pawsfriends.Profile.AccountSettingsActivity;
 
 public class GalleryFragment extends Fragment {
     private static final String TAG = "GalleryFragment";
@@ -77,6 +78,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
+
                 if(isRootTask()){
                     Intent intent = new Intent(getActivity(), NextActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
@@ -86,16 +88,12 @@ public class GalleryFragment extends Fragment {
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                     startActivity(intent);
-                    getActivity().finish();
                 }
-
 
             }
         });
 
         init();
-
-
 
         return view;
     }
@@ -108,15 +106,18 @@ public class GalleryFragment extends Fragment {
         if (FileSearch.getDirectoryPaths(filePaths.PICTURES) != null) {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
-        directories.add(filePaths.CAMERA);
 
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
-            Log.d(TAG, "init: directory: " + directories.get(i));
+
+//            Log.d(TAG, "init: directory: " + directories.get(i));
+
             int index = directories.get(i).lastIndexOf("/");
             String string = directories.get(i).substring(index);
             directoryNames.add(string);
         }
+
+        directories.add(filePaths.CAMERA);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
@@ -163,10 +164,12 @@ public class GalleryFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         //set the first image to be displayed when the activity fragment view is inflated
-        if(imgURLs.size()!= 0){
-            setImage(imgURLs.get(0), galleryImage, mAppend);
-            mSelectedImage = imgURLs.get(0);
-        }
+//        if(imgURLs.size()!= 0){
+//            setImage(imgURLs.get(0), galleryImage, mAppend);
+//            mSelectedImage = imgURLs.get(0);
+//        }
+        setImage(imgURLs.get(0), galleryImage, mAppend);
+        mSelectedImage = imgURLs.get(0);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

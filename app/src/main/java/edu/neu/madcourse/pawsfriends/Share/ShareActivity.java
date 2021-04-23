@@ -23,9 +23,11 @@ import edu.neu.madcourse.pawsfriends.Utils.SectionsPagerAdapter;
 
 public class ShareActivity extends AppCompatActivity{
     private static final String TAG = "ShareActivity";
-    private static final int ACTIVITY_NUM = 2;
 
+    // constant
+    private static final int ACTIVITY_NUM = 2;
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
+
     private Context mContext = ShareActivity.this;
     private ViewPager mViewPager;
 
@@ -141,5 +143,6 @@ public class ShareActivity extends AppCompatActivity{
         tabLayout.getTabAt(1).setText(getString(R.string.photo));
 
     }
+
 
 }
