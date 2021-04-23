@@ -23,9 +23,11 @@ import edu.neu.madcourse.pawsfriends.Utils.SectionsPagerAdapter;
 
 public class ShareActivity extends AppCompatActivity{
     private static final String TAG = "ShareActivity";
-    private static final int ACTIVITY_NUM = 2;
 
+    // constant
+    private static final int ACTIVITY_NUM = 2;
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
+
     private Context mContext = ShareActivity.this;
     private ViewPager mViewPager;
 
@@ -41,14 +43,13 @@ public class ShareActivity extends AppCompatActivity{
             verifyPermissions(Permissions.PERMISSIONS);
         }
 
-        //setupBottomNavigationView();
     }
 
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, this,bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
@@ -141,5 +142,6 @@ public class ShareActivity extends AppCompatActivity{
         tabLayout.getTabAt(1).setText(getString(R.string.photo));
 
     }
+
 
 }

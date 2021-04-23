@@ -41,13 +41,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting.");
 
+        setupFirebaseAuth();
+
         initImageLoader();
         setupBottomNavigationView();
         setupViewPager();
 
-        setupFirebaseAuth();
-
-        //mAuth.signOut();
     }
 
     private void initImageLoader(){
@@ -71,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_camera);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_action_name);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_instagram_black);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_arrow);
     }
 
@@ -79,13 +78,16 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, this,bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
     }
 
 
+    /*
+    ------------------------------------ Firebase ---------------------------------------------
+     */
 
 
     private void checkCurrentUser(FirebaseUser user){
@@ -97,6 +99,9 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Setup the firebase auth object
+     */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 

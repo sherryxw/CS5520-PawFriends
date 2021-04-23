@@ -56,7 +56,7 @@ public class PhotoFragment extends Fragment {
         return view;
     }
 
-    /**
+
     private boolean isRootTask(){
         if(((ShareActivity)getActivity()).getTask() == 0){
             return true;
@@ -65,7 +65,7 @@ public class PhotoFragment extends Fragment {
             return false;
         }
     }
-     **/
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,7 +75,7 @@ public class PhotoFragment extends Fragment {
             Log.d(TAG, "onActivityResult: done taking a photo.");
             Log.d(TAG, "onActivityResult: attempting to navigate to final share screen.");
 
-            /** Bitmap bitmap;
+            Bitmap bitmap;
             bitmap = (Bitmap) data.getExtras().get("data");
 
             if(isRootTask()){
@@ -98,7 +98,7 @@ public class PhotoFragment extends Fragment {
                 }catch (NullPointerException e){
                     Log.d(TAG, "onActivityResult: NullPointerException: " + e.getMessage());
                 }
-            } **/
+            }
 
         }
     }

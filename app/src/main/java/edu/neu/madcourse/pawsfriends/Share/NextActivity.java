@@ -29,6 +29,7 @@ import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
 import edu.neu.madcourse.pawsfriends.models.User;
 
 public class NextActivity extends AppCompatActivity {
+
     private static final String TAG = "NextActivity";
 
     // firebase
@@ -38,21 +39,22 @@ public class NextActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseMethods mFirebaseMethods;
 
+    //widgets
+    private EditText mCaption;
+
     // vars
     private String mAppend = "file:/";
     private int imageCount = 0;
-
     private String imgUrl;
     private Bitmap bitmap;
     private Intent intent;
-    private EditText mCaption;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
-
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
+        mCaption = (EditText) findViewById(R.id.caption);
 
         setupFirebaseAuth();
 
@@ -73,8 +75,8 @@ public class NextActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
-//                String caption = mCaption.getText().toString();
-/**
+                String caption = mCaption.getText().toString();
+
                 if(intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));
                     mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
@@ -83,13 +85,12 @@ public class NextActivity extends AppCompatActivity {
                     bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
                     mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
                 }
-
-**/
-
             }
         });
+
         setImage();
     }
+
 
     private void someMethod(){
         /*
@@ -107,8 +108,6 @@ public class NextActivity extends AppCompatActivity {
             b) insert into 'photos' node
             c) insert into 'user_photos' node
          */
-
-
     }
 
     /**
@@ -118,20 +117,17 @@ public class NextActivity extends AppCompatActivity {
         intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
 
-//        if(intent.hasExtra(getString(R.string.selected_image))){
-//            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-//            Log.d(TAG, "setImage: got new image url: " + imgUrl);
-//            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
-//        }
-//        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
-//            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
-//            Log.d(TAG, "setImage: got new bitmap");
-//            image.setImageBitmap(bitmap);
-//        }
-        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
+        if(intent.hasExtra(getString(R.string.selected_image))){
+            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+            Log.d(TAG, "setImage: got new image url: " + imgUrl);
+            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+        }
+        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+            Log.d(TAG, "setImage: got new bitmap");
+            image.setImageBitmap(bitmap);
+        }
     }
-
-
 
     /*
      ------------------------------------ Firebase ---------------------------------------------
@@ -151,7 +147,6 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
 
                 if (user != null) {
                     // User is signed in
@@ -180,7 +175,6 @@ public class NextActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public void onStart() {
