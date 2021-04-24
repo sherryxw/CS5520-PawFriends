@@ -122,7 +122,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -165,7 +165,7 @@ body {
       rgba(46, 49, 65, 0.8),
       rgba(46, 49, 65, 0.8)
     ),
-    url("../../images/bg.jpg");
+    url('../../images/bg.jpg');
   background-size: auto, cover;
   background-attachment: fixed, fixed;
   background-position: center, center;
@@ -191,7 +191,7 @@ input,
 select,
 textarea {
   color: #ffffff;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
   font-size: 16.5pt;
   font-weight: 300;
   line-height: 1.65;
@@ -279,7 +279,7 @@ a.special:not(.button):before {
   text-rendering: auto;
   line-height: 1;
   text-transform: none !important;
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
 
@@ -290,7 +290,7 @@ a.special:not(.button):before {
   transition: background-color 0.2s ease-in-out;
   border-radius: 100%;
   border: solid 2px rgba(255, 255, 255, 0.125);
-  content: "\f105";
+  content: '\f105';
   display: inline-block;
   font-size: 1.25em;
   height: 2em;
@@ -398,7 +398,7 @@ code {
   background: rgba(255, 255, 255, 0.025);
   border-radius: 5px;
   border: solid 2px rgba(255, 255, 255, 0.125);
-  font-family: "Courier New", monospace;
+  font-family: 'Courier New', monospace;
   font-size: 0.9em;
   margin: 0 0.25em;
   padding: 0.25em 0.65em;
@@ -406,7 +406,7 @@ code {
 
 pre {
   -webkit-overflow-scrolling: touch;
-  font-family: "Courier New", monospace;
+  font-family: 'Courier New', monospace;
   font-size: 0.9em;
   margin: 0 0 2em 0;
 }
@@ -2415,7 +2415,7 @@ ul.contact li:first-child {
   margin-left: 0.75em;
 }
 
-#header nav a[href="#menu"] {
+#header nav a[href='#menu'] {
   text-decoration: none;
   -moz-transition: background-color 0.2s ease-in-out;
   -webkit-transition: background-color 0.2s ease-in-out;
@@ -2426,7 +2426,7 @@ ul.contact li:first-child {
   padding: 0 1.35em;
 }
 
-#header nav a[href="#menu"]:before {
+#header nav a[href='#menu']:before {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   display: inline-block;
@@ -2435,20 +2435,20 @@ ul.contact li:first-child {
   text-rendering: auto;
   line-height: 1;
   text-transform: none !important;
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
 
-#header nav a[href="#menu"]:before {
-  content: "\f0c9";
+#header nav a[href='#menu']:before {
+  content: '\f0c9';
   line-height: inherit;
 }
 
-#header nav a[href="#menu"]:hover {
+#header nav a[href='#menu']:hover {
   background-color: rgba(255, 255, 255, 0.025);
 }
 
-#header nav a[href="#menu"]:active {
+#header nav a[href='#menu']:active {
   background-color: rgba(255, 255, 255, 0.075);
 }
 
@@ -2479,27 +2479,27 @@ ul.contact li:first-child {
     line-height: inherit;
   }
 
-  #header nav a[href="#menu"] {
+  #header nav a[href='#menu'] {
     box-shadow: none;
     padding: 0 1em;
     border-radius: 0;
   }
 
-  #header nav a[href="#menu"]:hover,
-  #header nav a[href="#menu"]:active {
+  #header nav a[href='#menu']:hover,
+  #header nav a[href='#menu']:active {
     background-color: inherit;
   }
 }
 
 @media screen and (max-width: 480px) {
-  #header nav a[href="#menu"] {
+  #header nav a[href='#menu'] {
     width: 4em;
     white-space: nowrap;
     text-indent: 4em;
     position: relative;
   }
 
-  #header nav a[href="#menu"]:before {
+  #header nav a[href='#menu']:before {
     width: inherit;
     position: absolute;
     top: 0;
@@ -2581,12 +2581,12 @@ ul.contact li:first-child {
 }
 
 #menu .close {
-  background-image: url("images/close.svg");
+  background-image: url('images/close.svg');
   background-position: 75% 25%;
   background-repeat: no-repeat;
   background-size: 2em 2em;
   border: 0;
-  content: "";
+  content: '';
   display: block;
   height: 4em;
   overflow: hidden;
@@ -2734,7 +2734,7 @@ body.is-menu-visible #menu .inner {
         rgba(46, 49, 65, 0.8),
         rgba(46, 49, 65, 0.8)
       ),
-      url("../../images/bg.jpg");
+      url('../../images/bg.jpg');
     background-size: auto, cover;
     background-position: center, center;
     margin-bottom: -6.5em;
@@ -2835,7 +2835,7 @@ body.is-preload #banner p {
         rgba(46, 49, 65, 0.8),
         rgba(46, 49, 65, 0.8)
       ),
-      url("../../images/bg.jpg");
+      url('../../images/bg.jpg');
     background-size: auto, cover;
     background-position: center, 0% 30%;
     margin-bottom: -6.5em;
@@ -2894,7 +2894,7 @@ body.is-preload #banner p {
 .wrapper:after {
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  content: "";
+  content: '';
   display: block;
   height: 6.5em;
   position: absolute;
@@ -3236,7 +3236,7 @@ body.is-preload #banner p {
         rgba(46, 49, 65, 0.8),
         rgba(46, 49, 65, 0.8)
       ),
-      url("../../images/bg.jpg");
+      url('../../images/bg.jpg');
     background-size: auto, cover;
     background-position: center, center;
     margin-top: -6.5em;
