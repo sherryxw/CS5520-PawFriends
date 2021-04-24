@@ -1,5 +1,8 @@
 package edu.neu.madcourse.pawsfriends.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class User {
 
     private String user_id;
@@ -14,9 +17,26 @@ public class User {
         this.username = username;
     }
 
-    public User() {
+    public User(Parcel in) {
+        user_id = in.readString();
+        phone_number = in.readLong();
+        email = in.readString();
+        username = in.readString();
 
     }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
 
 
     public String getUser_id() {
@@ -60,5 +80,18 @@ public class User {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(user_id);
+        dest.writeLong(phone_number);
+        dest.writeString(email);
+        dest.writeString(username);
     }
 }

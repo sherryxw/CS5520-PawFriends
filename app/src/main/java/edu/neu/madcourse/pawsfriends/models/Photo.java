@@ -71,6 +71,7 @@ public class Photo implements Parcelable {
         }
     };
 
+
     public List<Comment> getComments() {
         return comments;
     }
