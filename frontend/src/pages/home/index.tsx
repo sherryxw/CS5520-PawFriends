@@ -116,7 +116,7 @@ function Home(): JSX.Element {
                             </Col>
                             <Col sm='6'>
                               <span className='car_spec_header'>Mileage:</span>{" "}
-                              {post.mileage}
+                              {`${post.mileage} miles`}
                             </Col>
                           </Row>
                           <Row>
@@ -125,7 +125,8 @@ function Home(): JSX.Element {
                               {post.color}
                             </Col>
                             <Col sm='6'>
-                              <span className='car_spec_header'>Price:</span>{" "}
+                              <span className='car_spec_header'>Price:</span>
+                              {" $"}
                               {post.price}
                             </Col>
                           </Row>

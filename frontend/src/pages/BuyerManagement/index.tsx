@@ -211,6 +211,15 @@ const BuyerManagement = () => {
         </Row>
       );
     }
+    if (offerList.length === 0) {
+      return (
+        <Row className={"mt-3"}>
+          <Col sm='auto'>
+            We haven't received any offer for this post. Please wait.
+          </Col>
+        </Row>
+      );
+    }
     return offerList.map((offer: IOffer, index: number) => {
       const car = carList[index];
       const dealer = dealerList[index];

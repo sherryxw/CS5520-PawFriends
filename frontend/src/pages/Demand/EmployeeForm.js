@@ -16,6 +16,7 @@ const drivetrainItems = [
 
 const initialFValues = {
   dealerId: 0,
+  title: "",
   carMake: "",
   carModel: "",
   carYear: "",
@@ -55,6 +56,9 @@ export default function EmployeeForm() {
     if ("radius" in fieldValues)
       temp.radius =
         fieldValues.radius.length != 0 ? "" : "This field is required.";
+    if ("title" in fieldValues) {
+      temp.title = !fieldValues.title ? "This field is required" : "";
+    }
     setErrors({
       ...temp,
     });
@@ -73,7 +77,6 @@ export default function EmployeeForm() {
     if (validate()) {
       const cloneValues = _.cloneDeep(values);
       cloneValues.userId = _.get(user, "sub", "");
-      cloneValues.title = "fake title";
       axios
         .post("http://localhost:9527/api/posts/", cloneValues)
         .then((res) => {
@@ -91,6 +94,13 @@ export default function EmployeeForm() {
     <Form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={6}>
+          <Controls.Input
+            name='title'
+            label='Post Title'
+            value={values.title}
+            onChange={handleInputChange}
+            error={errors.title}
+          />
           <Controls.Input
             name='carMake'
             label='Car Make'
