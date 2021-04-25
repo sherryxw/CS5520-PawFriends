@@ -1,4 +1,4 @@
-# Cars Find You - frontend
+# Cars Find You :red_car: - frontend
 
 ## Setup Environment
 Create a `.env` file in the root of the `frontend` folder. The file should have these two fields.
