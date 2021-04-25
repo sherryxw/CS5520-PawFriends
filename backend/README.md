@@ -1,23 +1,21 @@
 # Cars Find You - backend
 
-## Install Dependencies
+## Setup Environment
 
-After cloning the project from Github, run `npm install` in this directory to install all dependencies.
-
-## Create .env File
-
-Create a environment file `.env` in this directory. This file defines environment variables. Here is a template of the env file.
+Create a `.env` file in the root of the backend folder. The file should have this two fields.
 
 ```
 MONGO_URL=
 PORT=
-AUTH0_DOMAIN=
-AUTH0_API_TOKEN=
 ```
+
+## Install Dependencies
+
+After cloning the project from Github, run `npm install` in this directory to install all dependencies.
 
 ## Start the Development
 
-Run `npm run dev` to start a backend dev server. This dev server is boosted by `nodemon`. Everytime you make modifications to source files, the dev server would re compile all source file and restart.
+Run `npm start` to start a new react dev server. This dev server is boosted by nodemon. Everytime you make modifications to source files, the dev server would re compile all source file and restart. 
 
 ## Project Structure
 
