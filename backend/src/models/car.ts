@@ -63,4 +63,14 @@ export interface ICar extends Document {
   updatedAt: Date;
 }
 
+export interface ICarSnippet {
+  _id: string;
+  vin: string;
+  carMake: string;
+  carModel: string;
+  carYear: string;
+  price: number;
+  mileage: number;
+}
+
 export const CarModel: Model<ICar> = model("Car", CarSchema);
