@@ -50,15 +50,15 @@ Buying a car is a laborious task. Usually, it takes people a lot of time and eff
 collection: car 
 | Field                        | Type                                |   Usage                            |
 | ---------------------------- | ------------------------------------|------------------------------------|
-| dealerId                     | string                              | dealers' Id in MongoDN             |
-| vin                          | string                              | Vehicle Identification Number      |
-| carMake                      | string                              | vechicle manufacturers             |
-| carModel                     | string                              | venicle model                      |
-| mileage                      | number                              | venicle mileage                    |
-| color                        | string                              | Vehicle color                      |
+| dealerId                     | string                              | dealers' Id in MongoDB             |
+| vin                          | string                              | vehicle identification number      |
+| carMake                      | string                              | vehicle manufacturers              |
+| carModel                     | string                              | vehicle model                      |
+| mileage                      | number                              | vehicle mileage                    |
+| color                        | string                              | vehicle color                      |
 | price                        | number                              | selling price                      |
 | year                         | string                              | model year                         |
-| creaedAt                     | Date                                | vehicle's info created date        |
+| createdAt                    | Date                                | vehicle's info created date        |
 | updatedAt                    | Date                                | vehicle's info updated date        |
 
 collection: user
@@ -70,7 +70,7 @@ collection: user
 | email                        | string                              | user's email                       |
 | phone                        | string                              | user's phone number                |
 | role                         | UserRole(enum)                      | user's identity : buyer or dealer  |
-| creaedAt                     | Date                                | user's info created date           |
+| createdAt                    | Date                                | user's info created date           |
 | updatedAt                    | Date                                | user's info updated date           |
 
 *UserRole = "BUYER" | "DEALER"
@@ -81,19 +81,19 @@ collection: post
 | ---------------------------- | ------------------------------------|------------------------------------|
 | userId                       | string                              | user's Id in MongoDB               |
 | title                        | string                              | the post's title                   |
-| carMake?                     | string                              | vechicle manufacturers             |
-| carModel?                    | string                              | venicle model                      |
+| carMake?                     | string                              | vehicle manufacturers              |
+| carModel?                    | string                              | vehicle model                      |
 | carYear?                     | string                              | vehicle registered year            |
 | zipCode?                     | string                              | users' zip code                    |
 | radius?                      | number                              | radius                             |
-| mileage?                     | number                              | venicle mileage                    |
-| trim?                        | string                              | venicle trim                       |
+| mileage?                     | number                              | vehicle mileage                    |
+| trim?                        | string                              | vehicle trim                       |
 | color?                       | string                              | Vehicle color                      |
-| image?                       | string                              | url tovehicle's picture            |
+| image?                       | string                              | url to vehicle's picture           |
 | price                        | number                              | selling price                      |
-| drivetrain?                  | string                              | vehicle derivetrain                |
+| drivetrain?                  | string                              | vehicle drivetrain                 |
 | additionalInformation?       | string                              | additional information             |
-| creaedAt                     | Date                                | postcreated date                   |
+| createdAt                    | Date                                | post created date                  |
 | updatedAt                    | Date                                | post updated date                  |
 
  *fields associate with ? are optional 
@@ -106,7 +106,7 @@ collection: offer
 | dealerId                     | string                              | dealer's Id in MongoDB             |
 | additionalInformation?       | string                              | additional information             |
 | status                       | OfferStatus(enum)                   | offer status                       |
-| creaedAt                     | Date                                | offer created date                 |
+| createdAt                    | Date                                | offer created date                 |
 | updatedAt                    | Date                                | offer updated date                 |
 
  *OfferStatus = "PENDING" | "ACCEPT" | "DECLINE" | "CANCEL";
