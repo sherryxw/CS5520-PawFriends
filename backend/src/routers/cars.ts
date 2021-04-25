@@ -46,6 +46,7 @@ carRouter.get("/dealer/:dealerId", (req, res, next) => {
 
 // add new car
 carRouter.post("/", (req, res, next) => {
+  console.log(req.body);
   new CarModel({
     dealerId: req.body.dealerId,
     vin: req.body.vin,
@@ -54,7 +55,7 @@ carRouter.post("/", (req, res, next) => {
     mileage: parseInt(req.body.mileage),
     color: req.body.color,
     price: parseInt(req.body.price),
-    year: req.body.year,
+    carYear: req.body.carYear,
     trim: req.body.trim,
     description: req.body.description,
     image: req.body.image,

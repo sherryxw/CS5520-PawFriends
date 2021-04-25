@@ -28,7 +28,7 @@ import { IOffer } from "src/types/offer";
 import { ToastState } from "src/commons/Toast";
 
 export const buildCarOption = (car: ICar) => {
-  return `${car.year} ${car.carMake} ${car.carModel}, ${car.mileage} miles, $${car.price}`;
+  return `${car.carYear} ${car.carMake} ${car.carModel}, ${car.mileage} miles, $${car.price}`;
 };
 
 type Props = {
@@ -317,10 +317,10 @@ const OfferModal = ({ open, onClose, post, setToastState }: Props) => {
               id='offer-modal-year'
               name='year'
               onChange={(event) => {
-                setNewCar({ ...newCar, year: event.target.value });
+                setNewCar({ ...newCar, carYear: event.target.value });
               }}
               type='text'
-              value={_.get(newCar, "year", "")}
+              value={_.get(newCar, "carYear", "")}
             />
           </Col>
           <Col sm={4}>

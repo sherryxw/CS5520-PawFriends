@@ -7,7 +7,7 @@ export interface ICar {
   mileage: number;
   color: string;
   price: number;
-  year: string;
+  carYear: string;
   trim?: string;
   description?: string;
   image?: string;

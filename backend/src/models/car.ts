@@ -31,7 +31,10 @@ export const CarSchema = new Schema(
       type: Number,
       required: true,
     },
-    year: {
+    drivetrain: {
+      type: String,
+    },
+    carYear: {
       type: String,
       required: true,
     },
@@ -52,7 +55,7 @@ export interface ICar extends Document {
   mileage: number;
   color: string;
   price: number;
-  year: string;
+  carYear: string;
   trim?: string;
   description?: string;
   image?: string;

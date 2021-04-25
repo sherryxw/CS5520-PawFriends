@@ -225,7 +225,7 @@ const BuyerManagement = () => {
           </Row>
         );
       }
-      const title = `${car.year} ${car.carMake} ${car.carModel} - $${car.price}`;
+      const title = `${car.carYear} ${car.carMake} ${car.carModel} - $${car.price}`;
       return (
         <Row className={"mt-3"} key={offer._id}>
           <Col sm='12'>
