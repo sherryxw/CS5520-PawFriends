@@ -52,7 +52,6 @@ function Home(): JSX.Element {
       api.post.get({ carMake, carModel, zipCode, lowestPrice, highestPrice }),
       api.manufacture.getMakeList(),
     ]).then(([postList, makeList]) => {
-      console.log(postList);
       setPostList(postList);
       setCarMakeList(makeList);
       setLoading(false);

@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import Controls from "../../Demand components/controls/Controls.js";
 import { useForm, Form } from "../../Demand components/useForm.js";
 import * as employeeService from "src/pages/Demand/employeeService.js";
-import axios from "axios";
+import api from "src/api";
 import _ from "lodash";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
@@ -77,8 +77,8 @@ export default function EmployeeForm() {
     if (validate()) {
       const cloneValues = _.cloneDeep(values);
       cloneValues.userId = _.get(user, "sub", "");
-      axios
-        .post("http://localhost:9527/api/posts/", cloneValues)
+      api
+        .create(cloneValues)
         .then((res) => {
           alert("car added succefully");
           resetForm();
