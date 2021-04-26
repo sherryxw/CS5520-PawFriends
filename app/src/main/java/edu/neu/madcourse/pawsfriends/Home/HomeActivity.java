@@ -99,9 +99,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Setup the firebase auth object
-     */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 

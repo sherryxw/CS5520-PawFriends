@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import edu.neu.madcourse.pawsfriends.R;
 
 public class CameraFragment extends Fragment {
+
     private static final String TAG = "CameraFragment";
 
     @Nullable
