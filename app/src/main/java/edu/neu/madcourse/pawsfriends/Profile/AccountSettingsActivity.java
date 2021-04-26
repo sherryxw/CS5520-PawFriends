@@ -32,14 +32,16 @@ import edu.neu.madcourse.pawsfriends.Utils.FirebaseMethods;
 import edu.neu.madcourse.pawsfriends.Utils.SectionsStatePagerAdapter;
 
 public class AccountSettingsActivity extends AppCompatActivity {
-
     private static final String TAG = "AccountSettingsActivity";
     private static final int ACTIVITY_NUM = 4;
 
     private Context mContext;
+
     public SectionsStatePagerAdapter pagerAdapter;
     private ViewPager mViewPager;
     private RelativeLayout mRelativeLayout;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,14 +68,12 @@ public class AccountSettingsActivity extends AppCompatActivity {
         });
     }
 
-
     private void getIncomingIntent(){
         Intent intent = getIntent();
 
+        //if there is an imageUrl attached as an extra, then it was chosen from the gallery/photo fragment
         if(intent.hasExtra(getString(R.string.selected_image))
                 || intent.hasExtra(getString(R.string.selected_bitmap))){
-
-            //if there is an imageUrl attached as an extra, then it was chosen from the gallery/photo fragment
             Log.d(TAG, "getIncomingIntent: New incoming imgUrl");
             if(intent.getStringExtra(getString(R.string.return_to_fragment)).equals(getString(R.string.edit_profile_fragment))){
 
@@ -89,9 +89,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
                     firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
                             null,(Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap)));
                 }
-
             }
         }
+
 
 
         if(intent.hasExtra(getString(R.string.calling_activity))){

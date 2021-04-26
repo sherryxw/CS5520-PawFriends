@@ -18,7 +18,6 @@ import edu.neu.madcourse.pawsfriends.Search.SearchActivity;
 import edu.neu.madcourse.pawsfriends.Share.ShareActivity;
 
 public class BottomNavigationViewHelper {
-
     private static final String TAG = "BottomNavigationViewHel";
 
     public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx){

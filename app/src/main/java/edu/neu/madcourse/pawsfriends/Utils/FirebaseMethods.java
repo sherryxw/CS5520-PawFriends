@@ -25,6 +25,8 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -39,8 +41,9 @@ import edu.neu.madcourse.pawsfriends.models.UserAccountSettings;
 import edu.neu.madcourse.pawsfriends.models.UserSettings;
 
 public class FirebaseMethods {
-
     private static final String TAG = "FirebaseMethods";
+
+    public String downloadUrl;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -51,7 +54,7 @@ public class FirebaseMethods {
     StorageReference mStorageReference;
 
     // vars
-    private Context mContext;
+    private final Context mContext;
     private double mPhotoUploadProgress = 0;
 
     public FirebaseMethods(Context context) {
@@ -66,9 +69,9 @@ public class FirebaseMethods {
         }
     }
 
-//    public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl){
+//    public void uploadNewPhoto(String photoType, String caption, int count, String imgUrl){
     public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl,
-                           Bitmap bm){
+                               Bitmap bm){
         Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
 
         FilePaths filePaths = new FilePaths();
@@ -81,10 +84,10 @@ public class FirebaseMethods {
                     .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
 
             //convert image url to bitmap
+            bm = ImageManager.getBitmap(imgUrl);
             if(bm == null){
                 bm = ImageManager.getBitmap(imgUrl);
             }
-
             byte[] bytes = ImageManager.getBytesFromBitmap(bm, 100);
 
             UploadTask uploadTask = null;
@@ -93,7 +96,6 @@ public class FirebaseMethods {
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
                     Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
                     while(!uri.isComplete());
                     Uri firebaseUrl = uri.getResult();
@@ -128,7 +130,9 @@ public class FirebaseMethods {
             });
 
         }
-        //case new profile photo
+
+
+//        //case new profile photo
         else if(photoType.equals(mContext.getString(R.string.profile_photo))){
             Log.d(TAG, "uploadNewPhoto: uploading new PROFILE photo");
 
@@ -145,25 +149,29 @@ public class FirebaseMethods {
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
-                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                    while(!uri.isComplete());
-                    Uri firebaseUrl = uri.getResult();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
 
-//                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
-
+                    // Continue with the task to get the download URL
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //insert into 'user_account_settings' node
-                    setProfilePhoto(firebaseUrl.toString());
-
+                    setProfilePhoto(uri.toString());
                     ((AccountSettingsActivity)mContext).setViewPager(
                             ((AccountSettingsActivity)mContext).pagerAdapter
                                     .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
+
                     );
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -172,19 +180,39 @@ public class FirebaseMethods {
                     Log.d(TAG, "onFailure: Photo upload failed.");
                     Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
                 }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                    if(progress - 15 > mPhotoUploadProgress){
-                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
-                        mPhotoUploadProgress = progress;
-                    }
-
-                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
-                }
             });
+
+//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
+//
+//                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+//
+//                    //insert into 'user_account_settings' node
+//                    setProfilePhoto(firebaseUrl.toString());
+//
+//
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Log.d(TAG, "onFailure: Photo upload failed.");
+//                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
+//                }
+//            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+//
+//                    if(progress - 15 > mPhotoUploadProgress){
+//                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
+//                        mPhotoUploadProgress = progress;
+//                    }
+//
+//                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
+//                }
+//            });
         }
 
     }
@@ -197,7 +225,6 @@ public class FirebaseMethods {
                 .child(mContext.getString(R.string.profile_photo))
                 .setValue(url);
     }
-
 
     private String getTimestamp(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
@@ -227,24 +254,24 @@ public class FirebaseMethods {
     }
 
 
-//    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
-//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
-//
-//        User user = new User();
-//
-//        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
-//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-//
-//            user.setUsername(ds.getValue(User.class).getUsername());
-//            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
-//
-//            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
-//                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
+        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
+
+        User user = new User();
+
+        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
+            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+
+            user.setUsername(ds.getValue(User.class).getUsername());
+            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
+
+            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
+                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     /**
@@ -269,9 +296,7 @@ public class FirebaseMethods {
 
                         }
                         else if(task.isSuccessful()){
-                            // sent verification email
                             sendVerificationEmail();
-
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                         }
@@ -282,39 +307,27 @@ public class FirebaseMethods {
 
     public void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (user != null) {
-            user.sendEmailVerification()
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
 
-                            }else {
-                                Toast.makeText(mContext, "couldn't send verification email", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    }else {
+                        Toast.makeText(mContext, "couldn't send verification email", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
 
-    /**
-     * Add information to the users nodes
-     * Add information to the user_account_settings node
-     * @param email
-     * @param username
-     * @param description
-     * @param website
-     * @param profile_photo
-     */
     public void addNewUser(String email, String username, String description, String website, String profile_photo) {
-
-        User user = new User(userID, 1, email, StringManipulation.condenseUsername(username));
-
+        User user  = new User(userID, 1, email, StringManipulation.condenseUsername(username));
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .setValue(user);
+
 
         UserAccountSettings settings = new UserAccountSettings(
                 description,
@@ -323,7 +336,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 profile_photo,
-                StringManipulation.condenseUsername(username),
+                username,
                 website
         );
 
@@ -519,8 +532,6 @@ public class FirebaseMethods {
         }
         return count;
     }
-
-
 
 
 

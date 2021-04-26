@@ -4,37 +4,23 @@ package edu.neu.madcourse.pawsfriends.Profile;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 
 
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import edu.neu.madcourse.pawsfriends.R;
-import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
-import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
-import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
-import edu.neu.madcourse.pawsfriends.Utils.ViewProfileFragment;
 import edu.neu.madcourse.pawsfriends.ViewPostFragment;
 import edu.neu.madcourse.pawsfriends.models.Photo;
-import edu.neu.madcourse.pawsfriends.models.User;
 
 
 public class ProfileActivity extends AppCompatActivity implements ProfileFragment.OnGridImageSelectedListener{
@@ -72,21 +58,47 @@ public class ProfileActivity extends AppCompatActivity implements ProfileFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
-//        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(ProfileActivity.this));
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(ProfileActivity.this));
 
         init();
 
+
     }
+
 
     private void init() {
         Log.d(TAG, "init: inflating " + getString(R.string.profile_fragment));
 
-        ProfileFragment fragment = new ProfileFragment();
-        FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(getString(R.string.profile_fragment));
-        transaction.commit();
+        Intent intent = getIntent();
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+            Log.d(TAG, "init: searching for user object attached as intent extra");
+            if(intent.hasExtra(getString(R.string.intent_user))){
+                Log.d(TAG, "init: inflating view profile");
+                edu.neu.madcourse.pawsfriends.Profile.ViewProfileFragment fragment = new edu.neu.madcourse.pawsfriends.Profile.ViewProfileFragment();
+                Bundle args = new Bundle();
+                args.putParcelable(getString(R.string.intent_user),
+                        intent.getParcelableExtra(getString(R.string.intent_user)));
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+            }else{
+                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Log.d(TAG, "init: inflating Profile");
+            ProfileFragment fragment = new ProfileFragment();
+            FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, fragment);
+            transaction.addToBackStack(getString(R.string.profile_fragment));
+            transaction.commit();
+        }
     }
+
+
 
 
 }

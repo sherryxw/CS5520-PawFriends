@@ -1,7 +1,8 @@
 package edu.neu.madcourse.pawsfriends;
 
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
-
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +18,20 @@ import androidx.fragment.app.Fragment;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import java.text.ParseException;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.neu.madcourse.pawsfriends.Utils.BottomNavigationViewHelper;
 import edu.neu.madcourse.pawsfriends.Utils.SquareImageView;
 import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
 import edu.neu.madcourse.pawsfriends.models.Photo;
+
+/**
+ * Created by User on 8/12/2017.
+ */
 
 public class ViewPostFragment extends Fragment {
 
@@ -40,6 +51,7 @@ public class ViewPostFragment extends Fragment {
     //vars
     private Photo mPhoto;
     private int mActivityNumber = 0;
+
 
     @Nullable
     @Override
@@ -67,14 +79,45 @@ public class ViewPostFragment extends Fragment {
         }
 
         setupBottomNavigationView();
+        setupWidgets();
 
         return view;
     }
 
+    private void setupWidgets(){
+        String timestampDiff = getTimestampDifference();
+        if(!timestampDiff.equals("0")){
+            mTimestamp.setText(timestampDiff + " DAYS AGO");
+        }else{
+            mTimestamp.setText("TODAY");
+        }
+    }
+
     /**
-     * retrieve the activity number from the incoming bundle from profileActivity interface
+     * Returns a string representing the number of days ago the post was made
      * @return
      */
+    private String getTimestampDifference(){
+        Log.d(TAG, "getTimestampDifference: getting timestamp difference.");
+
+        String difference = "";
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date today = c.getTime();
+        sdf.format(today);
+        Date timestamp;
+        final String photoTimestamp = mPhoto.getDate_created();
+        try{
+            timestamp = sdf.parse(photoTimestamp);
+            difference = String.valueOf(Math.round(((today.getTime() - timestamp.getTime()) / 1000 / 60 / 60 / 24 )));
+        }catch (ParseException e){
+            Log.e(TAG, "getTimestampDifference: ParseException: " + e.getMessage() );
+            difference = "0";
+        }
+        return difference;
+    }
+
     private int getActivityNumFromBundle(){
         Log.d(TAG, "getActivityNumFromBundle: arguments: " + getArguments());
 
@@ -86,10 +129,6 @@ public class ViewPostFragment extends Fragment {
         }
     }
 
-    /**
-     * retrieve the photo from the incoming bundle from profileActivity interface
-     * @return
-     */
     private Photo getPhotoFromBundle(){
         Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
 
@@ -100,10 +139,6 @@ public class ViewPostFragment extends Fragment {
             return null;
         }
     }
-
-    /**
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);

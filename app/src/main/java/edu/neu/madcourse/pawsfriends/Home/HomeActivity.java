@@ -41,12 +41,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting.");
 
-        setupFirebaseAuth();
-
         initImageLoader();
         setupBottomNavigationView();
         setupViewPager();
 
+        setupFirebaseAuth();
+
+        //mAuth.signOut();
     }
 
     private void initImageLoader(){
@@ -85,9 +86,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    /*
-    ------------------------------------ Firebase ---------------------------------------------
-     */
 
 
     private void checkCurrentUser(FirebaseUser user){
@@ -99,9 +97,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Setup the firebase auth object
-     */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 

@@ -44,7 +44,6 @@ import edu.neu.madcourse.pawsfriends.models.UserSettings;
 
 public class EditProfileFragment extends Fragment implements
         ConfirmPasswordDialog.OnConfirmPasswordListener{
-
     private static final String TAG = "EditProfileFragment";
 
 
@@ -117,6 +116,10 @@ public class EditProfileFragment extends Fragment implements
                                 }
                             });
 
+
+
+
+
                         }else{
                             Log.d(TAG, "onComplete: re-authentication failed.");
                         }
@@ -145,7 +148,6 @@ public class EditProfileFragment extends Fragment implements
 
         //setProfileImage();
         setupFirebaseAuth();
-
         //back arrow for navigating back to "ProfileActivity"
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
         backArrow.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +166,7 @@ public class EditProfileFragment extends Fragment implements
                 saveProfileSettings();
             }
         });
+
 
         return view;
     }
@@ -192,7 +195,8 @@ public class EditProfileFragment extends Fragment implements
             // step1) Reauthenticate
             //          -Confirm the password and email
             ConfirmPasswordDialog dialog = new ConfirmPasswordDialog();
-            dialog.show(getChildFragmentManager(), getString(R.string.confirm_password_dialog));
+
+            dialog.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
             dialog.setTargetFragment(EditProfileFragment.this, 1);
 
 
@@ -262,17 +266,17 @@ public class EditProfileFragment extends Fragment implements
 
 
 
-    // not use could be comment
-//    private void setProfileImage(){
-//        Log.d(TAG, "setProfileImage: setting profile image.");
-//        String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";
-//        UniversalImageLoader.setImage(imgURL, mProfilePhoto, null, "https://");
-//    }
+
+    private void setProfileImage(){
+        Log.d(TAG, "setProfileImage: setting profile image.");
+        String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";
+        UniversalImageLoader.setImage(imgURL, mProfilePhoto, null, "https://");
+    }
 
     private void setProfileWidgets(UserSettings userSettings){
-        Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
-        Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getUser().getEmail());
-        Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getUser().getPhone_number());
+        //Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
+        //Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getUser().getEmail());
+        //Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getUser().getPhone_number());
 
         mUserSettings = userSettings;
         //User user = userSettings.getUser();

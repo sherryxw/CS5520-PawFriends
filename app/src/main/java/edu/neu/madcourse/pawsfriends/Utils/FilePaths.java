@@ -4,9 +4,7 @@ import android.os.Environment;
 import android.content.Context;
 
 public class FilePaths {
-//    public String ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
-    private Context mContext;
-    String ROOT_DIR = mContext.getExternalFilesDir(null).getAbsolutePath();
+    public String ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
 
     public String PICTURES = ROOT_DIR + "/Pictures";
     public String CAMERA = ROOT_DIR + "/DCIM/Camera";

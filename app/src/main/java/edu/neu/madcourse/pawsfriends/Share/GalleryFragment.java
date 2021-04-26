@@ -1,5 +1,6 @@
 package edu.neu.madcourse.pawsfriends.Share;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -31,11 +32,12 @@ import edu.neu.madcourse.pawsfriends.Utils.FileSearch;
 import edu.neu.madcourse.pawsfriends.Utils.GridImageAdapter;
 
 public class GalleryFragment extends Fragment {
-
     private static final String TAG = "GalleryFragment";
+
 
     //constants
     private static final int NUM_GRID_COLUMNS = 3;
+
 
     //widgets
     private GridView gridView;
@@ -43,7 +45,6 @@ public class GalleryFragment extends Fragment {
     private ProgressBar mProgressBar;
     private Spinner directorySpinner;
 
-    // vars
     private ArrayList<String> directories;
     private String mAppend = "file:/";
     private String mSelectedImage;
@@ -76,7 +77,6 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
-
                 if(isRootTask()){
                     Intent intent = new Intent(getActivity(), NextActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
@@ -89,10 +89,14 @@ public class GalleryFragment extends Fragment {
                     getActivity().finish();
                 }
 
+
+
             }
         });
 
         init();
+
+
 
         return view;
     }
@@ -101,22 +105,18 @@ public class GalleryFragment extends Fragment {
         FilePaths filePaths = new FilePaths();
 
         //check for other folders indide "/storage/emulated/0/pictures"
-        Log.d("path", filePaths.PICTURES);
         if (FileSearch.getDirectoryPaths(filePaths.PICTURES) != null) {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
-
         directories.add(filePaths.CAMERA);
 
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
             Log.d(TAG, "init: directory: " + directories.get(i));
-
             int index = directories.get(i).lastIndexOf("/");
             String string = directories.get(i).substring(index);
             directoryNames.add(string);
         }
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
@@ -149,6 +149,7 @@ public class GalleryFragment extends Fragment {
     }
 
 
+
     private void setupGridView(String selectedDirectory){
         Log.d(TAG, "setupGridView: directory chosen: " + selectedDirectory);
         final ArrayList<String> imgURLs = FileSearch.getFilePaths(selectedDirectory);
@@ -163,12 +164,10 @@ public class GalleryFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         //set the first image to be displayed when the activity fragment view is inflated
-//        if(imgURLs.size()!= 0){
-//            setImage(imgURLs.get(0), galleryImage, mAppend);
-//            mSelectedImage = imgURLs.get(0);
-//        }
-        setImage(imgURLs.get(0), galleryImage, mAppend);
-        mSelectedImage = imgURLs.get(0);
+        if(imgURLs.size()!= 0){
+            setImage(imgURLs.get(0), galleryImage, mAppend);
+            mSelectedImage = imgURLs.get(0);
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

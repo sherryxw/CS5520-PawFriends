@@ -29,7 +29,6 @@ import edu.neu.madcourse.pawsfriends.Utils.UniversalImageLoader;
 import edu.neu.madcourse.pawsfriends.models.User;
 
 public class NextActivity extends AppCompatActivity {
-
     private static final String TAG = "NextActivity";
 
     // firebase
@@ -45,6 +44,7 @@ public class NextActivity extends AppCompatActivity {
     // vars
     private String mAppend = "file:/";
     private int imageCount = 0;
+
     private String imgUrl;
     private Bitmap bitmap;
     private Intent intent;
@@ -53,6 +53,7 @@ public class NextActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
+
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
         mCaption = (EditText) findViewById(R.id.caption);
 
@@ -76,6 +77,7 @@ public class NextActivity extends AppCompatActivity {
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
                 String caption = mCaption.getText().toString();
+                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl, null);
 
                 if(intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));
@@ -85,12 +87,25 @@ public class NextActivity extends AppCompatActivity {
                     bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
                     mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
                 }
+
+
+
+/**
+                if(intent.hasExtra(getString(R.string.selected_image))){
+                    imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
+                }
+                else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+                    bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
+                }
+
+**/
+
             }
         });
-
         setImage();
     }
-
 
     private void someMethod(){
         /*
@@ -116,6 +131,8 @@ public class NextActivity extends AppCompatActivity {
     private void setImage(){
         intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
+        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
 
         if(intent.hasExtra(getString(R.string.selected_image))){
             imgUrl = intent.getStringExtra(getString(R.string.selected_image));
@@ -128,6 +145,8 @@ public class NextActivity extends AppCompatActivity {
             image.setImageBitmap(bitmap);
         }
     }
+
+
 
     /*
      ------------------------------------ Firebase ---------------------------------------------
@@ -147,6 +166,7 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
 
                 if (user != null) {
                     // User is signed in
@@ -175,6 +195,7 @@ public class NextActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public void onStart() {

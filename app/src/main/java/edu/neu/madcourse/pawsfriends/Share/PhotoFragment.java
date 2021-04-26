@@ -56,7 +56,6 @@ public class PhotoFragment extends Fragment {
         return view;
     }
 
-
     private boolean isRootTask(){
         if(((ShareActivity)getActivity()).getTask() == 0){
             return true;
@@ -87,6 +86,7 @@ public class PhotoFragment extends Fragment {
                 }catch (NullPointerException e){
                     Log.d(TAG, "onActivityResult: NullPointerException: " + e.getMessage());
                 }
+
             }else{
                 try{
                     Log.d(TAG, "onActivityResult: received new bitmap from camera: " + bitmap);
@@ -99,6 +99,8 @@ public class PhotoFragment extends Fragment {
                     Log.d(TAG, "onActivityResult: NullPointerException: " + e.getMessage());
                 }
             }
+
+
 
         }
     }

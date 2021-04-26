@@ -1,14 +1,9 @@
 <resources>
     <string name="app_name">PawsFriends</string>
-
-    <!-- fragment names -->
     <string name="edit_profile_fragment">Edit Profile</string>
-    <string name="view_post_fragment">View Post</string>
     <string name="sign_out_fragment">Sign Out</string>
     <string name="profile_fragment">Profile</string>
-
-    <!-- dialog names -->
-    <string name="confirm_password_dialog">ConfirmPaswordDialog</string>
+    <string name="view_post_fragment">View Post</string>
 
     <!-- Firebase messages -->
     <string name="auth_failed">Failed to Authenticate</string>
@@ -57,6 +52,8 @@
     <string name="return_to_fragment">return_to_fragment</string>
     <string name="selected_bitmap">selected_bitmap</string>
     <string name="intent_user">intent_user</string>
+    <string name="view_profile_fragment">ViewProfile</string>
+    <string name="search_activity">Search Activity</string>
 
     <!-- Bundle arg names -->
     <string name="activity_number">activity_number</string>
@@ -64,12 +61,15 @@
     <!-- activity names -->
     <string name="profile_activity">Profile Activity</string>
 
+    <!-- dialog names -->
+    <string name="confirm_password_dialog">ConfirmPaswordDialog</string>
+
+
+
     <!-- strings -->
     <string name="gallery">GALLERY</string>
     <string name="photo">PHOTO</string>
     <string name="string_open_camera">OPEN CAMERA</string>
     <string name="string_next">NEXT</string>
     <string name="string_share">SHARE</string>
-
-
 </resources>
