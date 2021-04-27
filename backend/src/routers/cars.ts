@@ -18,6 +18,8 @@ carRouter.get("/:id", (request, response, next) => {
     });
 });
 
+
+
 // find car by dealerId
 carRouter.get("/dealer/snippet/:dealerId", (req, res, next) => {
   const andCondition: any[] = [];

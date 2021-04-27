@@ -67,6 +67,7 @@ const BuyerManagement = () => {
         }
       );
     });
+  
   };
 
   const renderPostHeaderList = () => {
