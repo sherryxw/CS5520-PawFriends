@@ -77,7 +77,7 @@ export default function EmployeeForm() {
     if (validate()) {
       const cloneValues = _.cloneDeep(values);
       cloneValues.userId = _.get(user, "sub", "");
-      api
+      api.post
         .create(cloneValues)
         .then((res) => {
           alert("car added succefully");
